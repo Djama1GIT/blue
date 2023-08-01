@@ -1,0 +1,191 @@
+body {
+    background-color: #111;
+    font-family: 'Montserrat', sans-serif;
+    color: #ddd;
+    overflow-y: hidden;
+}
+.head {
+    background-color: #222;
+}
+.logo {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-left: 0.6em;
+    margin-top: 0.2em;
+    color: inherit;
+}
+.logo:hover {
+    cursor: pointer;
+}
+.search {
+    display: inline-flex;
+    position: absolute;
+    margin-left: 40em;
+    margin-top: 0.6em;
+}
+.search input {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    color: #eee;
+    padding: 0.5em;
+    width: 25em;
+}
+.search button {
+    display: inline-flex;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+    width: 2.5em;
+}
+.search button:hover {
+    cursor: pointer;
+}
+.account {
+    display: inline-flex;
+    width: 1.4em;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    float: right;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 0.8em;
+    padding: 0.5em;
+}
+.account:hover {
+    cursor: pointer;
+}
+.sidebar {
+    display: block;
+    position: fixed;
+    height: 100%;
+    text-align: left;
+    background-color: #222;
+    border: 1px solid #444;
+    border-left: none;
+    border-radius: 0 0.2em 0 0;
+    margin-top: 0.2em;
+    margin-left: 0;
+    padding-top: 0.5em;
+    width: 24em;
+}
+.recommended table, .top table {
+    border-collapse: collapse;
+    width: 24em;
+    border-bottom: 1px solid #444;
+}
+.recommended table caption {
+    font-weight: bold;
+}
+.top table caption {
+    font-weight: bold;
+    border-top: 1px solid #444;
+}
+.recommended table th, .top table th {
+    display: flex;
+    border-top: 1px solid #444;
+    padding: 0.8em;
+}
+.top {
+    display: block;
+    position: fixed;
+    bottom: 0;
+}
+.avatar {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: #000;
+}
+th .name {
+    margin-left: 1em;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.content {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 28em);
+    text-align: left;
+    margin-left: 25em;
+    margin-top: 1em;
+}
+.streams {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+    grid-gap: 1em;
+    width: 100%;
+}
+.stream {
+    width: 21.3em;
+    height: 15em;
+}
+.most-popular .streams {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+.most-popular .stream {
+  flex: 0 0 21.3em;
+  margin-right: 1em;
+  height: 15.5em;
+}
+.streamImage {
+    width: 21.3em;
+    height: 12em;
+}
+.streamImage:hover {
+    cursor: pointer;
+}
+.stream .name {
+    line-height: 0rem;
+    font-weight: bold;
+    color: #eee;
+}
+.stream .author {
+    line-height: 0.8rem;
+    color: #888;
+}
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 10%;
+  padding: 10px;
+  background-color: rgba(50, 50, 50, 0.2);
+  border-radius: 0.5em;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+.prev-button {
+  left: 0;
+}
+.next-button {
+  right: 0;
+}
+.categories button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 4px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #eee;
+    background-color: #111;
+    transition: background-color 0.3s ease;
+}
+
+.categories button:hover {
+    background-color: #e0e0e0;
+    color: #111;
+    cursor: pointer;
+}
