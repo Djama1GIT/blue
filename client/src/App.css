@@ -127,6 +127,9 @@ th .name {
     width: 21.3em;
     height: 15em;
 }
+.stream a {
+    text-decoration: none;
+}
 .most-popular .streams {
   display: flex;
   overflow-x: scroll;
