@@ -16,36 +16,48 @@ def get_most_popular():
             "author": "illill",
             "name": "WHO AM I?",
             "category": "Video-games",
+            "viewers": 2,
+            "fake": True,
         },
         {
             "id": 2,
             "author": "TheStone",
             "name": "Болтаем",
             "category": "Video-games",
+            "viewers": 10,
+            "fake": True,
         },
         {
             "id": 3,
             "author": "Enrico_Hokage",
             "name": "CТРИМЛЮ SA:MP 24/7",
             "category": "Video-games",
+            "viewers": 24,
+            "fake": True,
         },
         {
             "id": 5,
             "author": "Delphizz",
             "name": "Играем в Game Name",
             "category": "Sport",
+            "viewers": 35,
+            "fake": True,
         },
         {
             "id": 4,
             "author": "FLUFFY",
             "name": "Играем в Minecraft",
             "category": "Video-games",
+            "viewers": 7,
+            "fake": True,
         },
         {
             "id": 6,
             "author": "GADJIIAVOV",
             "name": "Пишу этот сайт",
             "category": "IT",
+            "viewers": 120,
+            "fake": True,
         },
     ]
 
@@ -60,34 +72,69 @@ def get_popular_in_categories():
                     "id": 1,
                     "author": "illill",
                     "name": "WHO AM I?",
-                    "category": "Video-games",
+                    "viewers": 2,
+                    "fake": True,
                 },
                 {
                     "id": 2,
                     "author": "TheStone",
                     "name": "Болтаем",
-                    "category": "Video-games",
+                    "viewers": 10,
+                    "fake": True,
                 },
                 {
                     "id": 3,
                     "author": "Enrico_Hokage",
                     "name": "CТРИМЛЮ SA:MP 24/7",
-                    "category": "Video-games",
+                    "viewers": 24,
+                    "fake": True,
                 },
                 {
                     "id": 4,
                     "author": "FLUFFY",
                     "name": "Играем в Minecraft",
-                    "category": "Video-games",
+                    "viewers": 7,
+                    "fake": True,
                 },
             ],
         },
+        {
+            "category": "Sport",
+            "items": [
+                {
+                    "id": 5,
+                    "author": "Delphizz",
+                    "name": "Играем в Game Name",
+                    "viewers": 35,
+                    "fake": True,
+                }
+            ],
+        },
+        {
+            "category": "IT",
+            "items": [
+                {
+                    "id": 6,
+                    "author": "GADJIIAVOV",
+                    "name": "Пишу этот сайт",
+                    "viewers": 120,
+                    "fake": True,
+                }
+            ],
+        },
+
     ]
 
 
-@bp.route('/stream/', methods=['GET'])
-def get_stream():
-    return {}
+@bp.route('/stream/<id>/', methods=['GET'])
+def get_stream(id):
+    return {
+        "id": 6,
+        "author": "GADJIIAVOV",
+        "name": "Fake Stream Page",
+        "viewers": 120,
+        "fake": True,
+    }
 
 
 @bp.route('/<category>/', methods=['GET'])
