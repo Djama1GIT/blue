@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import ReactHlsPlayer from 'react-hls-player';
 import './App.css';
 
-const HOST = 'http://localhost:8080/';
+const HOST = 'http://localhost:5000/';
 const STATIC_URL = `${HOST}static/`;
 const MEDIA_URL = `${STATIC_URL}media/`;
 const PREVIEWS_URL = `${MEDIA_URL}previews/`;
@@ -234,7 +235,7 @@ function Stream(props) {
     <div className="stream-container">
         <div className="stream-content">
           <div className="stream-body">
-            <video src={`${MEDIA_URL}fake/${id}.mp4`} controls />
+            <Player />
           </div>
           <div className="stream-data">
             <p className="about">
@@ -394,6 +395,79 @@ function Stream(props) {
             </div>
         </div>
     </div>
+  );
+}
+
+function Player() {
+  const playerRef = React.useRef();
+  let play = true;
+
+  function playVideo() {
+    playerRef.current.play();
+  }
+
+  function pauseVideo() {
+    playerRef.current.pause();
+  }
+
+  function toggleControls() {
+    playerRef.current.controls = !playerRef.current.controls;
+  }
+
+
+  useEffect(() => {
+      playVideo();
+      const handleKeyDown = (event) => {
+        if ((event.key === 'F' || event.key === 'f' || event.key === 'а' || event.key === 'А') && document.fullscreenElement) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+          playerRef.current.controls = false;
+        } else if (event.key === 'F' || event.key === 'f' || event.key === 'а' || event.key === 'А') {
+          const video = document.getElementById('video');
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
+          playerRef.current.controls = true;
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+  }, []);
+
+  const handlePlayButtonClick = () => {
+    if ( play ) {
+        pauseVideo();
+        play = false;
+    } else {
+        playVideo();
+        play = true;
+    }
+  };
+
+  return (
+    <ReactHlsPlayer onClick={handlePlayButtonClick}
+      id="video"
+      playerRef={playerRef}
+      src="http://127.0.0.1:8080/hls/aboba.m3u8"
+      preload="auto"
+      width="1300"
+    />
   );
 }
 
