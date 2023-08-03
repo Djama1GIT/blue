@@ -1,4 +1,6 @@
-from flask import Blueprint, request
+import logging
+
+from flask import Blueprint, request, make_response
 
 bp = Blueprint('streams', __name__, url_prefix='/api/streams')
 
@@ -124,6 +126,16 @@ def get_popular_in_categories():
         },
 
     ]
+
+
+@bp.route('/stream/auth/', methods=['POST'])
+def auth_token():
+    response = make_response({
+        "authenticated": request.form['name'] == "aboba",
+        "token": request.form['name']
+    })
+    response.status_code = 200 if request.form['name'] == "aboba" else 403
+    return response
 
 
 @bp.route('/stream/<id>/', methods=['GET'])

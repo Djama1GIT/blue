@@ -55,12 +55,14 @@ function Sidebar() {
             <caption>Recommended</caption>
             {recommended.map((recommendItem) => (
               <tr>
-                <th>
-                  <img className="avatar" src={`${AVATARS_URL}${recommendItem.id}.png`} alt="" />
-                  <div className="name">
-                    {recommendItem.author} - {recommendItem.name}
-                  </div>
-                </th>
+                <Link to={!recommendItem.fake ? `/stream/${recommendItem.id}/` : `stream/fake/`}>
+                    <th>
+                      <img className="avatar" src={`${AVATARS_URL}${recommendItem.id}.png`} alt="" />
+                      <div className="name">
+                        {recommendItem.author} - {recommendItem.name}
+                      </div>
+                    </th>
+                </Link>
               </tr>
             ))}
           </table>
@@ -74,12 +76,14 @@ function Sidebar() {
             <caption>Top Streamers</caption>
             {top.map((streamerItem, index) => (
               <tr>
-                <th>
-                  <img className="avatar" src={`${AVATARS_URL}${streamerItem.id}.png`} alt="" />
-                  <div className="name">
-                    {index + 1}. {streamerItem.author}
-                  </div>
-                </th>
+                <Link to={!streamerItem.fake ? `/streamer/${streamerItem.id}/` : `stream/fake/`}>
+                    <th>
+                      <img className="avatar" src={`${AVATARS_URL}${streamerItem.id}.png`} alt="" />
+                      <div className="name">
+                        {index + 1}. {streamerItem.author}
+                      </div>
+                    </th>
+                </Link>
               </tr>
             ))}
           </table>
@@ -240,7 +244,7 @@ function Stream(props) {
             <p className="author">
                 <img src={`${AVATARS_URL}${streamData.id}.png`} alt="" />
                 <span>{streamData.author}</span>
-                <button className="follow">Follow</button>
+                <button className="subscribe">Subscribe</button>
             </p>
           </div>
         </div>
