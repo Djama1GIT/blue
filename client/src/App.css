@@ -1,9 +1,8 @@
-body {
+body, html {
     background-color: #111;
     font-family: 'Montserrat', sans-serif;
     color: #ddd;
     overflow-x: hidden;
-
 }
 a {
   text-decoration: none;
@@ -300,6 +299,7 @@ th .name {
 }
 .stream-data .author {
     margin-top: 0;
+    position: absolute;
 }
 
 .author:hover {
@@ -374,11 +374,14 @@ th .name {
     color: #ccc;
 }
 @media (max-width: 1900px) {
+  .stream-container {
+    width: 96.5%;
+  }
   .stream-container .chat {
     position: absolute;
     margin-top: 52.8em;
     margin-left: 1.65em;
-    width: 68em;
+    width: 98%;
     height: 40em;
     font-size: 18px;
     overflow-y: scroll;
@@ -388,7 +391,7 @@ th .name {
     position: absolute;
     margin-left: 1.5em;
     margin-top: 45em;
-    width: 61.2em;
+    width: 98%;
     padding-top: 0.6em;
     font-size: 20px;
     font-weight: bold;
@@ -398,6 +401,7 @@ th .name {
     border-radius: 10px 10px 0 0;
     text-align: center;
   }
+
 }
 .subscribe {
     display: flex;
@@ -412,4 +416,110 @@ th .name {
 }
 .subscribe:hover {
     cursor: pointer;
+}
+
+#video-player-container {
+    position: relative;
+}
+video {
+    width: 100%;
+    height: auto;
+}
+#video-controls {
+    position: absolute;
+    bottom: 3em;
+    left: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.0);
+    z-index: 10000;
+}
+#video-player-container:fullscreen #video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+#play {
+    position: absolute;
+    bottom: -2.6em;
+}
+#mute {
+    position: absolute;
+    bottom: -2.6em;
+    left: 4em;
+}
+#volume {
+    position: absolute;
+    left: 7em;
+    bottom: -2.4em;
+    width: 8em;
+    height: 1em;
+}
+#fullscreen {
+    position: absolute;
+    bottom: -2.6em;
+    left: 95.6em;
+}
+#play, #mute, #fullscreen {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    width: 2.1em;
+    height: 2.1em;
+    padding: 0;
+    line-height: 0;
+    text-align: center;
+}
+#video-player-container:fullscreen #video-controls{
+    position: absolute;
+    bottom: 0;
+    left: 0.5em;
+    bottom: 1em;
+}
+#video-player-container:fullscreen #video-controls #play {
+    position: absolute;
+    bottom: 0;
+    left: 0.5em;
+}
+#video-player-container:fullscreen #video-controls #mute {
+    position: absolute;
+    bottom: 0;
+    left: 3.5em;
+}
+#video-player-container:fullscreen #video-controls #volume {
+    position: absolute;
+    bottom: 0;
+    left: 8em;
+    width: 8em;
+    height: 1em;
+}
+.screen {
+    display: block;
+}
+#video-player-container:fullscreen .screen {
+    display: none;
+}
+#video-player-container:fullscreen #video-controls #fullscreen {
+    position: absolute;
+    bottom: 0;
+    left: auto;
+    right: 3em;
+}
+#video-player-container:fullscreen .full {
+    display: block;
+    opacity: 0.8;
+}
+#video-player-container:fullscreen .full2 {
+    display: block;
+    transform: rotate(90deg);
+    opacity: 0.3;
+}
+.full {
+    display: none;
+}
+.full2 {
+    display: none;
+    transform: rotate(90deg);
+    opacity: 0.5;
 }

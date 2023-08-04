@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 import ReactHlsPlayer from 'react-hls-player';
 import './App.css';
@@ -9,11 +9,14 @@ const MEDIA_URL = `${STATIC_URL}media/`;
 const PREVIEWS_URL = `${MEDIA_URL}previews/`;
 const AVATARS_URL = `${MEDIA_URL}avatars/`;
 
+const NAME = 'blue';
+const TITLE = `${NAME} — livestreaming service`
+
 function Head() {
   return (
     <div className="head">
       <Link className="logo" to="/">
-        blue
+        {NAME}
       </Link>
       <div className="search">
         <input type="text" placeholder="Search" />
@@ -100,9 +103,9 @@ function Content() {
   const [mostPopular, setMostPopular] = useState(null);
   const [popularInCategories, setPopularInCategories] = useState(null);
   const [categories, setCategories] = useState(null);
-  const prevButtonRef = React.useRef(null);
-  const nextButtonRef = React.useRef(null);
-  const sliderContentRef = React.useRef(null);
+  const prevButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
+  const sliderContentRef = useRef(null);
 
 
   const fetchMostPopular = async () => {
@@ -208,7 +211,7 @@ function Content() {
 function Stream(props) {
   const { id } = useParams();
   const [streamData, setStreamData] = useState(null);
-  const chatRef = React.useRef(null);
+  const chatRef = useRef(null);
 
   try {
       useEffect(() => {
@@ -399,8 +402,12 @@ function Stream(props) {
 }
 
 function Player() {
-  const playerRef = React.useRef();
-  let play = true;
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlay, setIsPlay] = useState(true);
+  const [volume, setVolume] = useState(1);
+  const [video, setVideo] = useState(null);
+  const playerRef = useRef();
+
 
   function playVideo() {
     playerRef.current.play();
@@ -410,37 +417,71 @@ function Player() {
     playerRef.current.pause();
   }
 
+  function togglePlay(video) {
+    if ( video.readyState === 4 || playerRef.current.readyState === 4) {
+        if ( (isPlay && video.paused === undefined) || (video.paused === true) ) {
+            playVideo();
+            setIsPlay(false);
+        } else {
+            pauseVideo();
+            setIsPlay(true);
+        }
+    }
+  }
+
+  function toggleMute() {
+    if (isMuted) {
+      playerRef.current.volume = volume;
+    } else {
+      setVolume(playerRef.current.volume);
+      playerRef.current.volume = 0;
+    }
+    setIsMuted(!isMuted);
+  }
+
+  function toggleFullScreen(video) {
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    } else if ( video ) {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.mozRequestFullScreen) {
+        video.mozRequestFullScreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    }
+  }
+
   function toggleControls() {
     playerRef.current.controls = !playerRef.current.controls;
   }
 
+  function handleVolumeChange(event) {
+    const value = parseFloat(event.target.value);
+    setVolume(value);
+    playerRef.current.volume = value;
+    setIsMuted(value === 0);
+  }
+
 
   useEffect(() => {
-      playVideo();
+      setVideo(document.getElementById('video-player-container'));
       const handleKeyDown = (event) => {
-        if ((event.key === 'F' || event.key === 'f' || event.key === 'а' || event.key === 'А') && document.fullscreenElement) {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-          } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-          }
-          playerRef.current.controls = false;
-        } else if (event.key === 'F' || event.key === 'f' || event.key === 'а' || event.key === 'А') {
-          const video = document.getElementById('video');
-          if (video.requestFullscreen) {
-            video.requestFullscreen();
-          } else if (video.mozRequestFullScreen) {
-            video.mozRequestFullScreen();
-          } else if (video.webkitRequestFullscreen) {
-            video.webkitRequestFullscreen();
-          } else if (video.msRequestFullscreen) {
-            video.msRequestFullscreen();
-          }
-          playerRef.current.controls = true;
+        if (event.keyCode === 32) {
+          togglePlay(document.getElementById('video'));
+        } else if (event.keyCode === 70) {
+          toggleFullScreen(document.getElementById('video-player-container'));
         }
       };
 
@@ -450,29 +491,45 @@ function Player() {
       };
   }, []);
 
-  const handlePlayButtonClick = () => {
-    if ( play ) {
-        pauseVideo();
-        play = false;
-    } else {
-        playVideo();
-        play = true;
-    }
-  };
 
   return (
-    <ReactHlsPlayer onClick={handlePlayButtonClick}
-      id="video"
-      playerRef={playerRef}
-      src="http://127.0.0.1:8080/hls/aboba.m3u8"
-      preload="auto"
-      width="1300"
+    <div id="video-player-container">
+      <ReactHlsPlayer
+        src="http://127.0.0.1:8080/hls/aboba.m3u8"
+        poster={`${PREVIEWS_URL}6.png`}
+        id="video"
+        playerRef={playerRef}
+        onClick={togglePlay}
+        width="1300"
+        preload="auto"
+        muted={isMuted}
+        autoPlay="true"
     />
+        <div id="video-controls">
+            <button id="play" onClick={togglePlay}>{isPlay ? "▶" : "II"}</button>
+            <button id="mute" onClick={toggleMute}>{isMuted ? "🔇" : "🔈"}</button>
+
+            <input
+              id="volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+            />
+            <button onClick={toggleFullScreen} id="fullscreen">
+              <div class="full">🢖🢔</div>
+              <div class="full2">🢖🢔</div>
+              <div class="screen">⛶</div>
+            </button>
+        </div>
+    </div>
   );
 }
 
 function Main() {
-  document.title = "blue — livestreaming service";
+  document.title = TITLE;
   return (
       <div>
         <Sidebar />
@@ -493,7 +550,7 @@ function PageNotFound() {
 
 
 function App() {
-  document.title = '404 - Page not found';
+  document.title = TITLE;
   return (
     <Router>
       <div className="app">

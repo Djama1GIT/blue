@@ -6,6 +6,8 @@ services:
       - "1935:1935"
       - "8080:8080"
     container_name: blue_rtmp_server
+#    volumes:
+#      - rtmp_data:/app/data
 
   server:
     build: ./server
@@ -14,9 +16,18 @@ services:
       - "5000:5000"
     environment:
       PYTHONUNBUFFERED: "1"
+#    volumes:
+#      - server_data:/app/data
 
   client:
     build: ./client
     ports:
       - "80:3000"
     container_name: blue_client
+#    volumes:
+#      - client_data:/app/data
+
+#volumes:
+#  rtmp_data
+#  server_data:
+#  client_data:
