@@ -129,12 +129,22 @@ def get_popular_in_categories():
 
 
 @bp.route('/stream/auth/', methods=['POST'])
-def auth_token():
+def auth_stream():
     response = make_response({
-        "authenticated": request.form['name'] == "aboba",
+        "authenticated": request.form['name'] == "token",
         "token": request.form['name']
     })
-    response.status_code = 200 if request.form['name'] == "aboba" else 403
+    response.status_code = 200 if request.form['key'] == "secret" else 403
+    return response
+
+
+@bp.route('/stream/stop/', methods=['POST'])
+def stop_stream():
+    response = make_response({
+        "authenticated": request.form['name'] == "token",
+        "token": request.form['name']
+    })
+    response.status_code = 200 if request.args.get('key') == "nginx_secret" else 403
     return response
 
 

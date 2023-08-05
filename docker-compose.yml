@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   rtmp:
-    build: ./streaming_server
+    build: ./streaming_service
     ports:
       - "1935:1935"
       - "8080:8080"
