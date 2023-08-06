@@ -211,7 +211,6 @@ function Content() {
 function Stream(props) {
   const { id } = useParams();
   const [streamData, setStreamData] = useState(null);
-  const chatRef = useRef(null);
 
   try {
       useEffect(() => {
@@ -219,10 +218,6 @@ function Stream(props) {
           const response = await fetch(`${HOST}api/streams/stream/${id}/`);
           const data = await response.json();
           setStreamData(data);
-
-          if (chatRef.current) {
-            chatRef.current.scrollTop = chatRef.current.scrollHeight;
-          }
         };
         fetchStreamData();
       }, [props.id]);
@@ -234,6 +229,7 @@ function Stream(props) {
     return <div className="stream-container">Loading...</div>;
   }
   document.title = streamData.name;
+
   return (
     <div className="stream-container">
         <div className="stream-content">
@@ -252,154 +248,46 @@ function Stream(props) {
             </p>
           </div>
         </div>
-        <p className="caption">Stream Chat</p>
-        <div className="chat" ref={chatRef}>
-            <div className="messages">
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div className="about">
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-                    </div>
-                </p>
-                <p className="message">
-                    <span><img src={`${AVATARS_URL}${streamData.id}.png`} alt="" /></span>
-                    <div>
-                    <span className="author">GADJIIAVOV</span>
-                    <span className="text">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </p>
-            </div>
-        </div>
+        <Chat />
     </div>
   );
 }
+
+function Chat() {
+    const chatRef = useRef(null);
+    const messages = [];
+    const [inputValue, setInputValue] = useState('');
+    const sendMessage = () => {};
+    return (
+        <>
+            <p className="caption">Stream Chat</p>
+            <div className="chat" ref={chatRef}>
+                <div className="messages">
+                    {messages.map((message, index) => (
+                      <p className="message" key={index}>
+                        <span><img src={`${AVATARS_URL}6.png`} alt="" /></span>
+                        <div className="about">
+                        <span className="author">{message.getName()}</span>
+                        <span className="text">{message.getBody()}</span>
+                        </div>
+                      </p>
+                    ))}
+                </div>
+
+            <div className="input">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Type your message..."
+                />
+                <button onClick={sendMessage}>Send</button>
+            </div>
+            </div>
+        </>
+    )
+}
+
 
 function Player() {
   const [isMuted, setIsMuted] = useState(false);
@@ -480,7 +368,7 @@ function Player() {
       const handleKeyDown = (event) => {
         if (event.keyCode === 32) {
           togglePlay(document.getElementById('video'));
-        } else if (event.keyCode === 70) {
+        } else if (event.keyCode === 70 ) {
           toggleFullScreen(document.getElementById('video-player-container'));
         }
       };
