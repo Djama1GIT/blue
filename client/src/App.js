@@ -33,22 +33,27 @@ function Sidebar() {
   const [recommended, setRecommended] = useState(null);
   const [top, setTop] = useState(null);
 
-  const fetchRecommended = async () => {
+  async function fetchRecommended() {
     const response = await fetch(`${HOST}api/recommended/`);
     const data = await response.json();
-    setRecommended(data);
-  };
+    return data;
+  }
 
-  const fetchTop = async () => {
+  async function fetchTop() {
     const response = await fetch(`${HOST}api/top/`);
     const data = await response.json();
-    setTop(data);
-  };
-
+    return data;
+  }
 
   useEffect(() => {
-    fetchRecommended();
-    fetchTop();
+    const fetchData = async () => {
+      const recommendedData = await fetchRecommended();
+      const topData = await fetchTop();
+      setRecommended(recommendedData);
+      setTop(topData);
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -58,14 +63,14 @@ function Sidebar() {
           <table>
             <caption>Recommended</caption>
             {recommended.map((recommendItem) => (
-              <tr>
+              <tr key={recommendItem.id}>
                 <Link to={!recommendItem.fake ? `/stream/${recommendItem.id}/` : `stream/fake/`}>
-                    <th>
-                      <img className="avatar" src={`${AVATARS_URL}${recommendItem.id}.png`} alt="" />
-                      <div className="name">
-                        {recommendItem.author} - {recommendItem.name}
-                      </div>
-                    </th>
+                  <th>
+                    <img className="avatar" src={`${AVATARS_URL}${recommendItem.id}.png`} alt="" />
+                    <div className="name">
+                      {recommendItem.author} - {recommendItem.name}
+                    </div>
+                  </th>
                 </Link>
               </tr>
             ))}
@@ -79,14 +84,14 @@ function Sidebar() {
           <table>
             <caption>Top Streamers</caption>
             {top.map((streamerItem, index) => (
-              <tr>
+              <tr key={streamerItem.id}>
                 <Link to={!streamerItem.fake ? `/streamer/${streamerItem.id}/` : `stream/fake/`}>
-                    <th>
-                      <img className="avatar" src={`${AVATARS_URL}${streamerItem.id}.png`} alt="" />
-                      <div className="name">
-                        {index + 1}. {streamerItem.author}
-                      </div>
-                    </th>
+                  <th>
+                    <img className="avatar" src={`${AVATARS_URL}${streamerItem.id}.png`} alt="" />
+                    <div className="name">
+                      {index + 1}. {streamerItem.author}
+                    </div>
+                  </th>
                 </Link>
               </tr>
             ))}
@@ -107,34 +112,46 @@ function Content() {
   const nextButtonRef = useRef(null);
   const sliderContentRef = useRef(null);
 
-
-  const fetchMostPopular = async () => {
+  async function fetchMostPopular() {
     const response = await fetch(`${HOST}api/streams/most_popular/`);
     const data = await response.json();
-    setMostPopular(data);
-  };
+    return data;
+  }
 
-  const fetchPopularInCategories = async () => {
+  async function fetchPopularInCategories() {
     const response = await fetch(`${HOST}api/streams/popular_in_categories/`);
     const data = await response.json();
-    setPopularInCategories(data);
-  };
+    return data;
+  }
 
-  const fetchCategories = async () => {
+  async function fetchCategories() {
     const response = await fetch(`${HOST}api/streams/categories/`);
     const data = await response.json();
-    setCategories(data);
-  };
+    return data;
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const mostPopularData = await fetchMostPopular();
+      const popularInCategoriesData = await fetchPopularInCategories();
+      const categoriesData = await fetchCategories();
+      setMostPopular(mostPopularData);
+      setPopularInCategories(popularInCategoriesData);
+      setCategories(categoriesData);
+    };
+
+    fetchData();
+  }, []);
 
   const streamUnparser = ({ id, author, name, viewers, fake }) => (
-    <div className="stream">
+    <div className="stream" key={id}>
       <Link to={!fake ? `/stream/${id}/` : `stream/fake/`}>
         <img src={`${PREVIEWS_URL}${id}.png`} className="streamImage" alt="" />
-        {fake ? (<p className="fake">FAKE</p>) : null}
+        {fake ? <p className="fake">FAKE</p> : null}
         <p className="viewers">Viewers:⠀{viewers}</p>
-        <div class="about">
-            <p className="name">{name}</p>
-            <p className="author">{author}</p>
+        <div className="about">
+          <p className="name">{name}</p>
+          <p className="author">{author}</p>
         </div>
       </Link>
     </div>
@@ -154,41 +171,33 @@ function Content() {
     });
   };
 
-  useEffect(() => {
-    fetchMostPopular();
-    fetchPopularInCategories();
-    fetchCategories();
-  }, []);
-
   return (
     <div className="content">
-      <button class="prev-button" onClick={handlePrevButtonClick} ref={prevButtonRef}>
+      <button className="prev-button" onClick={handlePrevButtonClick} ref={prevButtonRef}>
         ❮
       </button>
       <div className="most-popular">
         <p className="caption">Most popular streams</p>
         {mostPopular ? (
           <div className="streams" ref={sliderContentRef}>
-            {mostPopular.map((streamItem) => (
-              streamUnparser(streamItem)
-            ))}
+            {mostPopular.map((streamItem) => streamUnparser(streamItem))}
           </div>
         ) : (
           <p>Most Popular list is unavailable</p>
         )}
       </div>
-      <button class="next-button" onClick={handleNextButtonClick} ref={nextButtonRef}>
+      <button className="next-button" onClick={handleNextButtonClick} ref={nextButtonRef}>
         ❱
       </button>
       {popularInCategories ? (
         <div className="streamsInCategories">
           {popularInCategories.map((category) => (
-            <div className="category">
-              <p className="caption">Popular streams in the <span className="category">{category.category}</span> category</p>
+            <div className="category" key={category.category}>
+              <p className="caption">
+                Popular streams in the <span className="category">{category.category}</span> category
+              </p>
               <div className="streams">
-                {category.items.map((streamItem) => (
-                  streamUnparser(streamItem)
-                ))}
+                {category.items.map((streamItem) => streamUnparser(streamItem))}
               </div>
             </div>
           ))}
@@ -198,12 +207,18 @@ function Content() {
       )}
       {categories ? (
         <div className="categories">
-        <p className="caption"><span>Categories</span> that may be of interest to you</p>
-        {categories.map((category) => (
-        <button href={`${HOST}${category}`}>{category}</button>
-        ))}
+          <p className="caption">
+            <span>Categories</span> that may be of interest to you
+          </p>
+          {categories.map((category) => (
+            <button key={category} href={`${HOST}${category}`}>
+              {category}
+            </button>
+          ))}
         </div>
-        ) : (<p>Categories list unavailable</p>)}
+      ) : (
+        <p>Categories list unavailable</p>
+      )}
     </div>
   );
 }
@@ -212,18 +227,20 @@ function Stream(props) {
   const { id } = useParams();
   const [streamData, setStreamData] = useState(null);
 
-  try {
-      useEffect(() => {
-        const fetchStreamData = async () => {
-          const response = await fetch(`${HOST}api/streams/stream/${id}/`);
-          const data = await response.json();
-          setStreamData(data);
-        };
-        fetchStreamData();
-      }, [props.id]);
-  } catch (error) {
-      console.error(error);
-  };
+  async function fetchStreamData(id) {
+    const response = await fetch(`${HOST}api/streams/stream/${id}/`);
+    const data = await response.json();
+    return data;
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchStreamData(id);
+      setStreamData(data);
+    };
+
+    fetchData();
+  }, [id]);
 
   if (!streamData) {
     return <div className="stream-container">Loading...</div>;
@@ -232,62 +249,90 @@ function Stream(props) {
 
   return (
     <div className="stream-container">
-        <div className="stream-content">
-          <div className="stream-body">
-            <Player />
-          </div>
-          <div className="stream-data">
-            <p className="about">
-                <span className="name">{streamData.name}</span>
-                <span className="viewers">Viewers: {streamData.viewers}</span>
-            </p>
-            <p className="author">
-                <img src={`${AVATARS_URL}${streamData.id}.png`} alt="" />
-                <span>{streamData.author}</span>
-                <button className="subscribe">Subscribe</button>
-            </p>
-          </div>
+      <div className="stream-content">
+        <div className="stream-body">
+          <Player />
         </div>
-        <Chat />
+        <div className="stream-data">
+          <p className="about">
+            <span className="name">{streamData.name}</span>
+            <span className="viewers">Viewers: {streamData.viewers}</span>
+          </p>
+          <p className="author">
+            <img src={`${AVATARS_URL}${streamData.id}.png`} alt="" />
+            <span>{streamData.author}</span>
+            <button className="subscribe">Subscribe</button>
+          </p>
+        </div>
+      </div>
+      <Chat />
     </div>
   );
 }
 
 function Chat() {
-    const chatRef = useRef(null);
-    const messages = [];
-    const [inputValue, setInputValue] = useState('');
-    const sendMessage = () => {};
-    return (
-        <>
-            <p className="caption">Stream Chat</p>
-            <div className="chat" ref={chatRef}>
-                <div className="messages">
-                    {messages.map((message, index) => (
-                      <p className="message" key={index}>
-                        <span><img src={`${AVATARS_URL}6.png`} alt="" /></span>
-                        <div className="about">
-                        <span className="author">{message.getName()}</span>
-                        <span className="text">{message.getBody()}</span>
-                        </div>
-                      </p>
-                    ))}
-                </div>
+  const chatRef = useRef(null);
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const socketRef = useRef(null);
 
-            <div className="input">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Type your message..."
-                />
-                <button onClick={sendMessage}>Send</button>
-            </div>
-            </div>
-        </>
-    )
+  useEffect(() => {
+    socketRef.current = new WebSocket("ws://localhost:5555/api/chats/websocket");
+
+    socketRef.current.onopen = function (event) {
+      console.log("Connected to WebSocket");
+    };
+
+    socketRef.current.onmessage = function (event) {
+      setMessages((prevMessages) => [...prevMessages, event.data]);
+    };
+
+    socketRef.current.onclose = function (event) {
+      console.log("Disconnected from WebSocket");
+    };
+
+    return () => {
+      socketRef.current.close();
+    };
+  }, []);
+
+  function sendMessage() {
+    const message = document.getElementById("messageInput").value;
+    socketRef.current.send(message);
+  }
+
+  return (
+    <>
+      <p className="caption">Stream Chat</p>
+      <div className="chat" ref={chatRef}>
+        <div className="messages">
+          {messages.map((message, index) => (
+            <p className="message" key={index}>
+              <span>
+                <img src={`${AVATARS_URL}6.png`} alt="" />
+              </span>
+              <div className="about">
+                <span className="author">Author</span>
+                <span className="text">{message}</span>
+              </div>
+            </p>
+          ))}
+        </div>
+
+        <div className="input">
+          <input
+            id="messageInput"
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Type your message..."
+          />
+          <button onClick={sendMessage}>Send</button>
+        </div>
+      </div>
+    </>
+  );
 }
-
 
 function Player() {
   const [isMuted, setIsMuted] = useState(false);
@@ -295,7 +340,6 @@ function Player() {
   const [volume, setVolume] = useState(1);
   const [video, setVideo] = useState(null);
   const playerRef = useRef();
-
 
   function playVideo() {
     playerRef.current.play();
@@ -306,14 +350,14 @@ function Player() {
   }
 
   function togglePlay(video) {
-    if ( video.readyState === 4 || playerRef.current.readyState === 4) {
-        if ( (isPlay && video.paused === undefined) || (video.paused === true) ) {
-            playVideo();
-            setIsPlay(false);
-        } else {
-            pauseVideo();
-            setIsPlay(true);
-        }
+    if (video.readyState === 4 || playerRef.current.readyState === 4) {
+      if ((isPlay && video.paused === undefined) || video.paused === true) {
+        playVideo();
+        setIsPlay(false);
+      } else {
+        pauseVideo();
+        setIsPlay(true);
+      }
     }
   }
 
@@ -338,7 +382,7 @@ function Player() {
       } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
       }
-    } else if ( video ) {
+    } else if (video) {
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.mozRequestFullScreen) {
@@ -362,56 +406,75 @@ function Player() {
     setIsMuted(value === 0);
   }
 
-
   useEffect(() => {
-      setVideo(document.getElementById('video-player-container'));
-      const handleKeyDown = (event) => {
-        if (event.keyCode === 32) {
-          togglePlay(document.getElementById('video'));
-        } else if (event.keyCode === 70 ) {
-          toggleFullScreen(document.getElementById('video-player-container'));
-        }
-      };
+    setVideo(document.getElementById('video-player-container'));
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 32) {
+        togglePlay(document.getElementById('video'));
+      } else if (event.keyCode === 70) {
+        toggleFullScreen(document.getElementById('video-player-container'));
+      }
+    };
 
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-      };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
+  useEffect(() => {
+    const fetchPlaylist = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8080/hls/aboba.m3u8');
+        const playlist = await response.text();
+        const playlistUrl = new URL(playlist, 'http://127.0.0.1:8080/hls/aboba.m3u8');
+        setVideo(playlistUrl.href);
+      } catch (error) {
+        console.error('Failed to fetch playlist:', error);
+      }
+    };
+
+    fetchPlaylist();
+  }, []);
 
   return (
     <div id="video-player-container">
-      <ReactHlsPlayer
-        src="http://127.0.0.1:8080/hls/aboba.m3u8"
-        poster={`${PREVIEWS_URL}6.png`}
-        id="video"
-        playerRef={playerRef}
-        onClick={togglePlay}
-        width="1300"
-        preload="auto"
-        muted={isMuted}
-        autoPlay="true"
-    />
-        <div id="video-controls">
-            <button id="play" onClick={togglePlay}>{isPlay ? "▶" : "II"}</button>
-            <button id="mute" onClick={toggleMute}>{isMuted ? "🔇" : "🔈"}</button>
+      {video && (
+        <ReactHlsPlayer
+          src={video}
+          poster={`${PREVIEWS_URL}6.png`}
+          id="video"
+          playerRef={playerRef}
+          onClick={togglePlay}
+          width="1300"
+          preload="auto"
+          muted={isMuted}
+          autoPlay={true}
+        />
+      )}
+      <div id="video-controls">
+        <button id="play" onClick={togglePlay}>
+          {isPlay ? '▶' : 'II'}
+        </button>
+        <button id="mute" onClick={toggleMute}>
+          {isMuted ? '🔇' : '🔈'}
+        </button>
 
-            <input
-              id="volume"
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-            />
-            <button onClick={toggleFullScreen} id="fullscreen">
-              <div class="full">🢖🢔</div>
-              <div class="full2">🢖🢔</div>
-              <div class="screen">⛶</div>
-            </button>
-        </div>
+        <input
+          id="volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleVolumeChange}
+        />
+        <button onClick={toggleFullScreen} id="fullscreen">
+          <div className="full">🢖🢔</div>
+          <div className="full2">🢖🢔</div>
+          <div className="screen">⛶</div>
+        </button>
+      </div>
     </div>
   );
 }
@@ -419,23 +482,21 @@ function Player() {
 function Main() {
   document.title = TITLE;
   return (
-      <div>
-        <Sidebar />
-        <Content />
-      </div>
-  )
+    <div>
+      <Sidebar />
+      <Content />
+    </div>
+  );
 }
 
 function PageNotFound() {
-    return (
-        <div>404
-            <h1 style={{margin: 2 + 'em'}}>
-                404 - Page Not Found
-            </h1>
-        </div>
-    )
+  return (
+    <div>
+      404
+      <h1 style={{ margin: 2 + 'em' }}>404 - Page Not Found</h1>
+    </div>
+  );
 }
-
 
 function App() {
   document.title = TITLE;
