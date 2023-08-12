@@ -274,22 +274,31 @@ function Chat() {
   const chatRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws://localhost:5555/api/chats/websocket");
+    const connectToWebSocket = async () => {
+      const socket = new WebSocket("ws://localhost:5555");
 
-    socketRef.current.onopen = function (event) {
-      console.log("Connected to WebSocket");
+      socket.onopen = function (event) {
+        console.log("Connected to WebSocket");
+        setIsConnected(true);
+      };
+
+      socket.onmessage = function (event) {
+        setMessages((prevMessages) => [...prevMessages, event.data]);
+      };
+
+      socket.onclose = function (event) {
+        console.log("Disconnected from WebSocket");
+        setIsConnected(false);
+      };
+
+      socketRef.current = socket;
     };
 
-    socketRef.current.onmessage = function (event) {
-      setMessages((prevMessages) => [...prevMessages, event.data]);
-    };
-
-    socketRef.current.onclose = function (event) {
-      console.log("Disconnected from WebSocket");
-    };
+    connectToWebSocket();
 
     return () => {
       socketRef.current.close();
@@ -306,6 +315,19 @@ function Chat() {
       <p className="caption">Stream Chat</p>
       <div className="chat" ref={chatRef}>
         <div className="messages">
+          <p className="message">
+            <small className="about rules">
+              Chat rules:<br/>
+              <span>1. Instead of making donations to the streamer, viewers should demand
+              donations from the streamer for their entertainment.</span><br/>
+              <span>2. Instead of subscribing to the channel, viewers should request
+              that the streamer subscribe to their social media accounts.</span><br/>
+              <span>3. Instead of sending positive and supportive messages in the chat,
+              viewers should only send emoticons and meaningless phrases.</span><br/>
+              <span>4. Instead of showing genuine excitement in exciting moments,
+              viewers should remain completely unperturbed and uninterested.</span>
+            </small>
+          </p>
           {messages.map((message, index) => (
             <p className="message" key={index}>
               <span>
@@ -326,13 +348,16 @@ function Chat() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type your message..."
+            disabled={!isConnected}
           />
-          <button onClick={sendMessage}>Send</button>
+          <button onClick={sendMessage} disabled={!isConnected}>Send</button>
         </div>
       </div>
     </>
   );
 }
+
+
 
 function Player() {
   const [isMuted, setIsMuted] = useState(false);
@@ -422,42 +447,25 @@ function Player() {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchPlaylist = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8080/hls/aboba.m3u8');
-        const playlist = await response.text();
-        const playlistUrl = new URL(playlist, 'http://127.0.0.1:8080/hls/aboba.m3u8');
-        setVideo(playlistUrl.href);
-      } catch (error) {
-        console.error('Failed to fetch playlist:', error);
-      }
-    };
-
-    fetchPlaylist();
-  }, []);
-
   return (
     <div id="video-player-container">
-      {video && (
-        <ReactHlsPlayer
-          src={video}
-          poster={`${PREVIEWS_URL}6.png`}
-          id="video"
-          playerRef={playerRef}
-          onClick={togglePlay}
-          width="1300"
-          preload="auto"
-          muted={isMuted}
-          autoPlay={true}
-        />
-      )}
+      <ReactHlsPlayer
+        src="http://127.0.0.1:8080/hls/token.m3u8"
+        poster={`${PREVIEWS_URL}6.png`}
+        id="video"
+        playerRef={playerRef}
+        onClick={togglePlay}
+        width="1300"
+        preload="auto"
+        muted={isMuted}
+        autoPlay="true"
+      />
       <div id="video-controls">
         <button id="play" onClick={togglePlay}>
-          {isPlay ? '▶' : 'II'}
+          {isPlay ? "▶" : "II"}
         </button>
         <button id="mute" onClick={toggleMute}>
-          {isMuted ? '🔇' : '🔈'}
+          {isMuted ? "🔇" : "🔈"}
         </button>
 
         <input

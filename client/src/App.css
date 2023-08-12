@@ -373,6 +373,15 @@ th .name {
     font-size: 16px;
     color: #ccc;
 }
+.chat .rules {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.chat .rules .span {
+    line-height: 0;
+}
 @media (max-width: 1900px) {
   .stream-container {
     width: 96.5%;
