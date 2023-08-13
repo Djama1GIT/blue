@@ -19,6 +19,14 @@ services:
 #    volumes:
 #      - server_data:/app/data
 
+  chat:
+    build: ./chat_service
+    container_name: blue_chat_service
+    ports:
+      - "5555:5555"
+    environment:
+      PYTHONUNBUFFERED: "1"
+
   client:
     build: ./client
     ports:
