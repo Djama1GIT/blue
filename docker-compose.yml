@@ -3,6 +3,8 @@ services:
   db:
     image: postgres:15
     container_name: blue_db
+    ports:
+      - "5432:5432"
     restart: always
     env_file:
       - .env
@@ -23,17 +25,27 @@ services:
     ports:
       - "1935:1935"
       - "8080:8080"
+    restart: always
     container_name: blue_streaming_service
+    depends_on:
+      - db
+      - redis
 #    volumes:
 #      - rtmp_data:/app/data
 
   server:
     build: ./server
     container_name: blue_server
+    command: sh -c "alembic upgrade head && python manage.py run --ac --auto"
     ports:
       - "5000:5000"
-    environment:
-      PYTHONUNBUFFERED: "1"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - rtmp
 #    volumes:
 #      - server_data:/app/data
 
@@ -42,8 +54,13 @@ services:
     container_name: blue_chat_service
     ports:
       - "5555:5555"
-    environment:
-      PYTHONUNBUFFERED: "1"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - rtmp
 #    volumes:
 #      - chat_data:/app/data
 
@@ -51,7 +68,14 @@ services:
     build: ./client
     ports:
       - "80:3000"
+    restart: always
     container_name: blue_client
+    depends_on:
+      - db
+      - redis
+      - server
+      - chat
+      - rtmp
 #    volumes:
 #      - client_data:/app/data
 

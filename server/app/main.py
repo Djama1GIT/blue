@@ -1,15 +1,9 @@
-import os
-import sys
-
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-server_path = os.path.join(os.getcwd(), "server/app")
-sys.path.insert(0, server_path)
-
-from server.app.routers import home, streams
-from server.app.config import DATABASE_URL, SECRET_KEY
+from routers import home, streams
+from config import DATABASE_URL, SECRET_KEY
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 cors = CORS(app)

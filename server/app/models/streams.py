@@ -1,10 +1,4 @@
-import os
-import sys
-
-server_path = os.path.join(os.getcwd(), "server/app")
-sys.path.insert(0, server_path)
-
-from server.app.main import db
+from main import db
 
 
 class Stream(db.Model):

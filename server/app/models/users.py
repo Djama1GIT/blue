@@ -1,12 +1,6 @@
-import os
-import sys
-
 from flask_login import UserMixin
 
-server_path = os.path.join(os.getcwd(), "server/app")
-sys.path.insert(0, server_path)
-
-from server.app.main import db
+from main import db
 
 
 class User(db.Model, UserMixin):
