@@ -1,8 +1,6 @@
-import logging
-
 from flask import Blueprint, request, make_response
 
-bp = Blueprint('streams', __name__, url_prefix='/api/streams')
+bp = Blueprint('streams', __name__, url_prefix='/api/streams/')
 
 
 @bp.route('/categories/', methods=['GET'])

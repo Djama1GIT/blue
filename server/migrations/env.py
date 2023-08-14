@@ -1,3 +1,5 @@
+import os
+import sys
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -5,9 +7,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
+server_path = os.path.join(os.getcwd(), "app")
+sys.path.insert(0, server_path)
+
 from config import DATABASE_URL
 from main import db
-from models import *
+from models.users import *
+from models.streams import *
 
 
 # this is the Alembic Config object, which provides

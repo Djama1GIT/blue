@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-from routers import home, streams
+from routers import home, streams, chat, users
 from config import DATABASE_URL, SECRET_KEY
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -14,6 +14,8 @@ db = SQLAlchemy(app)
 
 app.register_blueprint(home.bp)
 app.register_blueprint(streams.bp)
+app.register_blueprint(chat.bp)
+app.register_blueprint(users.bp)
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=443)

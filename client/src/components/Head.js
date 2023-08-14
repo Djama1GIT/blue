@@ -13,7 +13,9 @@ function Head() {
         <button type="submit">🔍</button>
       </div>
       <div className="account">
-        <span>👤</span>
+        <Link to="/login/">
+            <span>👤</span>
+        </Link>
       </div>
     </div>
   );

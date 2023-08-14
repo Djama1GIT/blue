@@ -136,6 +136,77 @@ th .name {
     margin-left: 25em;
     margin-top: 3.2em;
 }
+.auth-content {
+    display: block;
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    margin-top: 2em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.auth {
+    display: inline-grid;
+}
+.auth input {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    color: #eee;
+    margin-bottom: 0.5em;
+    padding: 0.5em 0.5em;
+    width: 25em;
+}
+.auth p {
+    text-align: left;
+}
+
+.recovery_login-link:visited,
+.recovery_login-link {
+    text-align: left;
+    color: #55f;
+}
+.recovery_login-link:hover,
+.register-link:hover {
+    text-decoration: underline;
+}
+.register-link {
+    text-align: left;
+    margin-top: 0.5em;
+    margin-left: 0em;
+    font-size: 18px;
+    color: #aaa;
+}
+#recovery-submit,
+#register-submit,
+#login-submit {
+    display: inline-flex;
+    margin-left: 9.8em;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    justify-content: center;
+    align-items: center;
+    width: 4em;
+    height: 2em;
+    font-size: 14px;
+    color: #eee;
+}
+#register-submit {
+    width: 6em;
+    height: 2em;
+}
+#register-submit:hover,
+#login-submit:hover,
+#recovery-submit:hover {
+    cursor: pointer;
+}
+#recovery-submit {
+    margin-left: 8em;
+    width: 6em;
+    height: 2em;
+}
 @media (max-width: 1400px) {
   .top {
     display: none;
@@ -194,7 +265,7 @@ th .name {
     font-size: 24px;
     font-weight: bold;
     color: #499;
-    margin-left: 11.6em;
+    margin-left: 11.4em;
 }
 .stream .name {
     line-height: 0rem;

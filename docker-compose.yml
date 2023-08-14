@@ -30,13 +30,13 @@ services:
     depends_on:
       - db
       - redis
+      - server
 #    volumes:
 #      - rtmp_data:/app/data
 
   server:
     build: ./server
     container_name: blue_server
-    command: sh -c "alembic upgrade head && python manage.py run --ac --auto"
     ports:
       - "5000:5000"
     restart: always
@@ -45,7 +45,6 @@ services:
     depends_on:
       - db
       - redis
-      - rtmp
 #    volumes:
 #      - server_data:/app/data
 
