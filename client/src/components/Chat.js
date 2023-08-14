@@ -16,6 +16,7 @@ function Chat() {
 
     socket.onopen = function (event) {
       socketRef.current.send(JSON.stringify({"action": "join",
+                                             "author": "GADJIIAVOV",
                                              "room_name": "stream-hashed-token-space-user-hashed-token"}));
       setIsConnected(true);
     };
@@ -48,7 +49,10 @@ function Chat() {
 
   function sendMessage() {
     const message = document.getElementById("messageInput").value;
-    const data = { "action":"message", message };
+    const data = {
+            "action": "message",
+            message
+            };
     if (message) {
       socketRef.current?.send(JSON.stringify(data));
     }

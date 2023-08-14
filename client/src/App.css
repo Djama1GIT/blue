@@ -356,6 +356,7 @@ th .name {
     display: block;
     margin-top: 0.5em;
     padding-bottom: 0.2em;
+    word-break: break-word;
 }
 .chat .message {
     display: flex;
