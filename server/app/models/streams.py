@@ -1,12 +1,14 @@
-from main import db
+from db import Base
+from sqlalchemy import Column, UUID, String
+from sqlalchemy.orm import relationship
 
 
-class Stream(db.Model):
+class Stream(Base):
     __tablename__ = 'streams'
 
-    id = db.Column(db.UUID, primary_key=True)
-    name = db.Column(db.String(30), nullable=False, default="")
-    token = db.Column(db.String(80), nullable=False)
-    hashed_token = db.Column(db.String(80), nullable=False)
-    preview = db.Column(db.String, nullable=True)
-    author = db.relationship("User", back_populates="stream")
+    id = Column(UUID, primary_key=True)
+    name = Column(String(30), nullable=False, default="")
+    token = Column(String(80), nullable=False)
+    hashed_token = Column(String(80), nullable=False)
+    preview = Column(String, nullable=True)
+    author = relationship("User", back_populates="stream")

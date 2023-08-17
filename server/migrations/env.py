@@ -11,7 +11,7 @@ server_path = os.path.join(os.getcwd(), "app")
 sys.path.insert(0, server_path)
 
 from config import DATABASE_URL
-from main import db
+from db import metadata
 from models.users import *
 from models.streams import *
 
@@ -32,7 +32,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = db.metadata
+target_metadata = metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

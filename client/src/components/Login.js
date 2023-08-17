@@ -10,9 +10,9 @@ function Login() {
             <h1>Login</h1>
             <input type="text" id="login" placeholder="Enter login" required/>
             <input type="text" id="password" placeholder="Enter password" required/>
-            <Link className="recovery_login-link" to='/recovery-password'>Forgot your password?</Link>
+            <Link className="recovery_login-link" to='/recovery-password/'>Forgot your password?</Link>
             <p>
-                <Link className="register-link" to='/register'>Create an account</Link>
+                <Link className="register-link" to='/register/'>Create an account</Link>
                 <button id="login-submit" type="submit">Login</button>
             </p>
 

@@ -11,9 +11,3 @@ COPY . .
 ENV FLASK_APP=main.py
 
 EXPOSE 5000
-
-CMD ["alembic", "upgrade", "head"]
-
-WORKDIR app
-
-CMD ["flask", "run", "--host=0.0.0.0"]

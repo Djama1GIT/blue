@@ -10,7 +10,7 @@ function RecoveryPassword() {
             <h1>Recovery Account</h1>
             <input type="text" id="login" placeholder="Enter login" required/>
             <p>
-                <Link className="register-link" to='/register'>Create an account</Link>
+                <Link className="register-link" to='/register/'>Create an account</Link>
                 <button id="recovery-submit" type="submit">Recovery</button>
             </p>
 
