@@ -22,5 +22,5 @@ SMTP_SSL: bool = bool(os.getenv("SMTP_SSL"))
 REDIS_HOST: str = os.getenv("REDIS_HOST")
 REDIS_PORT: int = int(os.getenv("REDIS_PORT"))
 
-DATABASE_URL = f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}' \
+DATABASE_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}' \
                f'@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'

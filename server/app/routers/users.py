@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 
 @bp.route('/register/', methods=['POST'])
-async def register():
-    user = await UsersRepository.register(request.form['login'], request.form['password'])
+def register():
+    user = UsersRepository.register(request.form['login'], request.form['password'])
     response = make_response({})
     if user == UsersRepository.USER_ALREADY_EXISTS:
         response.status_code = 409
@@ -18,8 +18,8 @@ async def register():
 
 
 @bp.route('/login/', methods=['POST'])
-async def login_():
-    user = await UsersRepository.login(request.form['login'], request.form['password'])
+def login_():
+    user = UsersRepository.login(request.form['login'], request.form['password'])
     response = make_response({})
     if user == UsersRepository.USER_DOES_NOT_EXIST or user == UsersRepository.INCORRECT_PASSWORD:
         response.status_code = 401

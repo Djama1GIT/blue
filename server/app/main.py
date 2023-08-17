@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from routers import home, streams, chat, users
 from config import DATABASE_URL, SECRET_KEY
 from models.users import User
+from db import db
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 cors = CORS(app)
@@ -14,6 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+db.init_app(app)
 
 
 @login_manager.user_loader
