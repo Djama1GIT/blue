@@ -36,14 +36,17 @@ async def register(login_, password):
 
 
 async def login(login_, password):
-    user = await User.query.filter_by(name=login_).scalars().first()
-    if user:
-        if bcrypt.checkpw(password, user.password):
-            return user
+    async with async_session_maker() as session:
+        statement = select(User).where(User.name == login_)
+        result = await session.execute(statement)
+        user = result.scalars().first()
+        if user:
+            if user.hashed_password == hash_pw(password):
+                return user
+            else:
+                return INCORRECT_PASSWORD
         else:
-            return INCORRECT_PASSWORD
-    else:
-        return USER_DOES_NOT_EXIST
+            return USER_DOES_NOT_EXIST
 
 
 def hash_pw(password):
