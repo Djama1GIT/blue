@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, request, make_response
-from flask_login import login_required, logout_user, login_user
+from flask_login import login_required, logout_user, login_user, current_user
 
 from repositories import users as UsersRepository
 
@@ -42,6 +42,5 @@ def logout():
 
 
 @bp.route('/auth/', methods=['POST'])
-@login_required
 def authenticate():
-    return {}
+    return {"user": current_user.json() if current_user.is_authenticated else None}

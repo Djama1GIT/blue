@@ -75,6 +75,9 @@ a {
     border-radius: 0.8em;
     padding: 0.5em;
 }
+.account.authorized {
+    width: auto;
+}
 .account:hover {
     cursor: pointer;
 }

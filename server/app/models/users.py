@@ -17,3 +17,13 @@ class User(UserMixin, Base):
     hashed_token = Column(String(120), nullable=False)
     stream_id = Column(UUID, ForeignKey('streams.id'), nullable=True)
     stream = relationship("Stream", back_populates="author")
+
+    def json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "hashed_token": self.hashed_token,
+            "stream_id": self.stream_id,
+            "stream": self.stream,
+        }
