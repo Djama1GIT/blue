@@ -10,30 +10,35 @@ app = Flask(__name__)
 
 @bp.route('/register/', methods=['POST'])
 def register():
-    user = UsersRepository.register(request.form['login'], request.form['password'])
-    response = make_response({})
+    data = request.get_json()
+    if len(data.get('login')) < 8:
+        return make_response({'message': 'Login should be at least 8 characters long'}, 418)
+    if len(data.get('password')) < 8:
+        return make_response({'message': 'Password should be at least 8 characters long'}, 418)
+
+    user = UsersRepository.register(data.get('login'), data.get('password'))
     if user == UsersRepository.USER_ALREADY_EXISTS:
-        response.status_code = 409
-    return response
+        return make_response({'message': 'A user with this login already exists'}, 409)
+    else:
+        return make_response({}, 200)
 
 
 @bp.route('/login/', methods=['POST'])
 def login_():
-    user = UsersRepository.login(request.form['login'], request.form['password'])
-    response = make_response({})
+    data = request.get_json()
+    user = UsersRepository.login(data.get('login'), data.get('password'))
     if user == UsersRepository.USER_DOES_NOT_EXIST or user == UsersRepository.INCORRECT_PASSWORD:
-        response.status_code = 401
+        return make_response({'message': 'Incorrect login and/or password'}, 401)
     else:
         login_user(user)
-    return response
+        return make_response({}, 200)
 
 
 @bp.route('/logout/', methods=['POST'])
 @login_required
 def logout():
     logout_user()
-    response = make_response({})
-    return response
+    return make_response({}, 200)
 
 
 @bp.route('/auth/', methods=['POST'])
