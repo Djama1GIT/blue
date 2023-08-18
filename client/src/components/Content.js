@@ -46,7 +46,7 @@ function Content() {
     <div className="stream" key={id}>
       <Link to={!fake ? `/stream/${id}/` : `stream/fake/`}>
         <img src={`${PREVIEWS_URL}${id}.png`} className="streamImage" alt="" />
-        {fake ? <p className="fake">FAKE</p> : null}
+        {fake && <p className="fake">FAKE</p>}
         <p className="viewers">Viewers:⠀{viewers}</p>
         <div className="about">
           <p className="name">{name}</p>

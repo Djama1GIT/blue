@@ -8,11 +8,13 @@ from models.users import User
 from db import db
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
-cors = CORS(app)
+cors = CORS(app, supports_credentials=True)
 
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-
+app.config["SESSION_COOKIE_HTTPONLY"] = False
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = None
 login_manager = LoginManager()
 login_manager.init_app(app)
 db.init_app(app)
@@ -20,7 +22,7 @@ db.init_app(app)
 
 @login_manager.user_loader
 def get_by_id(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 
 app.register_blueprint(home.bp)

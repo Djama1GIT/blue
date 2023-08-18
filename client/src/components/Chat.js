@@ -85,7 +85,7 @@ function Chat() {
           </p>
           {messages.map((message, index) => (
             <>
-            {message.error ? null : (
+            {!message.error && (
                <p className="message" key={index}>
                  <span>
                    <img src={`${AVATARS_URL}6.png`} alt="" />

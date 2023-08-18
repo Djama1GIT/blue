@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-
-import { NAME } from '../Consts'
+import { NAME } from '../Consts';
 
 function Head() {
+  const hasCookieSession = document.cookie.includes('session');
+
   return (
     <div className="head">
       <Link className="logo" to="/">
@@ -12,11 +13,13 @@ function Head() {
         <input type="text" placeholder="Search" />
         <button type="submit">🔍</button>
       </div>
-      <div className="account">
-        <Link to="/login/">
+      {!hasCookieSession && (
+        <div className="account">
+          <Link to="/login/">
             <span>👤</span>
-        </Link>
-      </div>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

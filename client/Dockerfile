@@ -18,6 +18,8 @@ CMD ["npm", "i", "react-router-dom@6.14.2"]
 
 CMD ["npm", "i", "react-hls-player@0.3.7", "--force"]
 
+CMD ["npm", "i", "axios", "--force"]
+
 CMD ["npm", "run", "build"]
 
 CMD ["npm", "start"]
