@@ -1,69 +1,16 @@
 from flask import Blueprint, request, make_response, jsonify
-
+from static.fake import recommended, top
+from config import FAKE_DATA
 bp = Blueprint('home', __name__, url_prefix='/api/')
 
 
 @bp.route('/recommended/', methods=['GET'])
 def get_recommended():
-    return [
-        {
-            "id": 5,
-            "author": "Delphizz",
-            "name": "Играем в Game Name",
-        },
-        {
-            "id": 1,
-            "author": "illill",
-            "name": "WHO AM I?",
-        },
-        {
-            "id": 2,
-            "author": "TheStone",
-            "name": "Болтаем",
-        },
-        {
-            "id": 4,
-            "author": "FLUFFY",
-            "name": "Играем в Minecraft",
-        },
-        {
-            "id": 3,
-            "author": "Enrico_Hokage",
-            "name": "CТРИМЛЮ SA:MP 24/7",
-        },
-        {
-            "id": 6,
-            "author": "GADJIIAVOV",
-            "name": "Пишу этот сайт",
-        },
-    ]
+    recommended_list = []
+    return recommended_list + (recommended if FAKE_DATA else [])
 
 
 @bp.route('/top/', methods=['GET'])
 def get_top():
-    return [
-        {
-            "id": 5,
-            "author": "Delphizz"
-        },
-        {
-            "id": 1,
-            "author": "illill"
-        },
-        {
-            "id": 2,
-            "author": "TheStone"
-        },
-        {
-            "id": 4,
-            "author": "FLUFFY"
-        },
-        {
-            "id": 3,
-            "author": "Enrico_Hokage"
-        },
-        {
-            "id": 6,
-            "author": "GADJIIAVOV"
-        },
-    ]
+    top_list = []
+    return top_list + (top if FAKE_DATA else [])

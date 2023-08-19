@@ -32,7 +32,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      {recommended ? (
+      {recommended && recommended[0] ? (
         <div className="recommended">
           <table>
             <caption>Recommended</caption>
@@ -53,7 +53,7 @@ function Sidebar() {
       ) : (
         <div className="recommended">Recommended list unavailable.</div>
       )}
-      {top ? (
+      {top && top[0] ? (
         <div className="top">
           <table>
             <caption>Top Streamers</caption>

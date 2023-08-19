@@ -3,7 +3,7 @@ import ReactHlsPlayer from 'react-hls-player';
 
 import { PREVIEWS_URL } from '../Consts'
 
-function Player() {
+function Player({ streamData }) {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlay, setIsPlay] = useState(true);
   const [volume, setVolume] = useState(1);
@@ -94,8 +94,8 @@ function Player() {
   return (
     <div id="video-player-container">
       <ReactHlsPlayer
-        src="http://127.0.0.1:8080/hls/token.m3u8"
-        poster={`${PREVIEWS_URL}6.png`}
+        src={`http://127.0.0.1:8080/hls/${streamData.token}.m3u8`}
+        poster={`${PREVIEWS_URL}${streamData.id}.png`}
         id="video"
         playerRef={playerRef}
         onClick={togglePlay}

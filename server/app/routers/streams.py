@@ -1,129 +1,26 @@
 from flask import Blueprint, request, make_response
+from static.fake import categories, most_popular, popular_in_categories, stream
+from config import FAKE_DATA
 
 bp = Blueprint('streams', __name__, url_prefix='/api/streams/')
 
 
 @bp.route('/categories/', methods=['GET'])
 def get_categories():
-    return ["Video-games", "Sport", "IT", "Music", "News", "Movies", "Cooking", "Fitness", "Fashion", "Travel"]
+    categories_list = []
+    return categories_list + (categories if FAKE_DATA else [])
 
 
 @bp.route('/most_popular/', methods=['GET'])
 def get_most_popular():
-    return [
-        {
-            "id": 1,
-            "author": "illill",
-            "name": "WHO AM I?",
-            "category": "Video-games",
-            "viewers": 2,
-            "fake": True,
-        },
-        {
-            "id": 2,
-            "author": "TheStone",
-            "name": "Болтаем",
-            "category": "Video-games",
-            "viewers": 10,
-            "fake": True,
-        },
-        {
-            "id": 3,
-            "author": "Enrico_Hokage",
-            "name": "CТРИМЛЮ SA:MP 24/7",
-            "category": "Video-games",
-            "viewers": 24,
-            "fake": True,
-        },
-        {
-            "id": 5,
-            "author": "Delphizz",
-            "name": "Играем в Game Name",
-            "category": "Sport",
-            "viewers": 35,
-            "fake": True,
-        },
-        {
-            "id": 4,
-            "author": "FLUFFY",
-            "name": "Играем в Minecraft",
-            "category": "Video-games",
-            "viewers": 7,
-            "fake": True,
-        },
-        {
-            "id": 6,
-            "author": "GADJIIAVOV",
-            "name": "Пишу этот сайт",
-            "category": "IT",
-            "viewers": 120,
-            "fake": True,
-        },
-    ]
+    list_most_popular = []
+    return list_most_popular + (most_popular if FAKE_DATA else [])
 
 
 @bp.route('/popular_in_categories/', methods=['GET'])
 def get_popular_in_categories():
-    return [
-        {
-            "category": "Video-games",
-            "items": [
-                {
-                    "id": 1,
-                    "author": "illill",
-                    "name": "WHO AM I?",
-                    "viewers": 2,
-                    "fake": True,
-                },
-                {
-                    "id": 2,
-                    "author": "TheStone",
-                    "name": "Болтаем",
-                    "viewers": 10,
-                    "fake": True,
-                },
-                {
-                    "id": 3,
-                    "author": "Enrico_Hokage",
-                    "name": "CТРИМЛЮ SA:MP 24/7",
-                    "viewers": 24,
-                    "fake": True,
-                },
-                {
-                    "id": 4,
-                    "author": "FLUFFY",
-                    "name": "Играем в Minecraft",
-                    "viewers": 7,
-                    "fake": True,
-                },
-            ],
-        },
-        {
-            "category": "Sport",
-            "items": [
-                {
-                    "id": 5,
-                    "author": "Delphizz",
-                    "name": "Играем в Game Name",
-                    "viewers": 35,
-                    "fake": True,
-                }
-            ],
-        },
-        {
-            "category": "IT",
-            "items": [
-                {
-                    "id": 6,
-                    "author": "GADJIIAVOV",
-                    "name": "Пишу этот сайт",
-                    "viewers": 120,
-                    "fake": True,
-                }
-            ],
-        },
-
-    ]
+    list_popular_in_categories = []
+    return list_popular_in_categories + (popular_in_categories if FAKE_DATA else [])
 
 
 @bp.route('/stream/auth/', methods=['POST'])
@@ -148,15 +45,15 @@ def stop_stream():
 
 @bp.route('/stream/<id>/', methods=['GET'])
 def get_stream(id):
-    return {
-        "id": 6,
-        "author": "GADJIIAVOV",
-        "name": "Fake Stream Page",
-        "viewers": 120,
-        "fake": True,
-    }
+    if id == "fake":
+        return stream
+    return {}
 
 
 @bp.route('/<category>/', methods=['GET'])
 def get_streams_in_category(category):
-    return {"category": category}
+    streams_in_category = []
+    return {
+        "category": category,
+        "streams": streams_in_category
+    }

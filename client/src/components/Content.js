@@ -69,26 +69,29 @@ function Content() {
       behavior: 'smooth',
     });
   };
-
+  console.log(mostPopular);
   return (
     <div className="content">
-      <button className="prev-button" onClick={handlePrevButtonClick} ref={prevButtonRef}>
+      {mostPopular && mostPopular[0] && <button className="prev-button" onClick={handlePrevButtonClick} ref={prevButtonRef}>
         ❮
-      </button>
+      </button>}
       <div className="most-popular">
-        <p className="caption">Most popular streams</p>
-        {mostPopular ? (
+
+        {mostPopular && mostPopular[0] ? (
+          <>
+          <p className="caption">Most popular streams</p>
           <div className="streams" ref={sliderContentRef}>
             {mostPopular.map((streamItem) => streamUnparser(streamItem))}
           </div>
+          </>
         ) : (
           <p>Most Popular list is unavailable</p>
         )}
       </div>
-      <button className="next-button" onClick={handleNextButtonClick} ref={nextButtonRef}>
+      {mostPopular && mostPopular[0] && <button className="next-button" onClick={handleNextButtonClick} ref={nextButtonRef}>
         ❱
-      </button>
-      {popularInCategories ? (
+      </button>}
+      {popularInCategories && popularInCategories[0] ? (
         <div className="streamsInCategories">
           {popularInCategories.map((category) => (
             <div className="category" key={category.category}>
@@ -104,7 +107,7 @@ function Content() {
       ) : (
         <p>Popular streams in categories are unavailable</p>
       )}
-      {categories ? (
+      {categories && categories[0] ? (
         <div className="categories">
           <p className="caption">
             <span>Categories</span> that may be of interest to you

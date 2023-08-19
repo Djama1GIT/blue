@@ -6,7 +6,7 @@ import { HOST, AVATARS_URL } from '../Consts'
 import Player from './Player';
 import Chat from './Chat'
 
-function Stream(props) {
+function Stream() {
   const { id } = useParams();
   const [streamData, setStreamData] = useState(null);
 
@@ -34,7 +34,7 @@ function Stream(props) {
     <div className="stream-container">
       <div className="stream-content">
         <div className="stream-body">
-          <Player />
+          <Player streamData={streamData}/>
         </div>
         <div className="stream-data">
           <p className="about">
