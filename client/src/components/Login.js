@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { HOST, NAME } from '../Consts'
+import { getCookie } from '../Utils'
 
-function Login() {
+function Login({ session, setSession, user, setUser, fetchUser }) {
   document.title = `${NAME} - Login`;
 
   const [login, setLogin] = useState('');
@@ -13,11 +14,10 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const sessionCookie = document.cookie.includes('session');
-    if (sessionCookie) {
+    if (session) {
       navigate('/');
     }
-  }, []);
+  }, [session]);
 
   const handleLogin = async () => {
     try {
@@ -40,10 +40,8 @@ function Login() {
         login: login,
         password: password
       }, { withCredentials: true });
-
+      if (!user) fetchUser();
       navigate('/');
-      console.log(response);
-      console.log(document.cookie);
     } catch (error_) {
       setError(error_.response?.data.message);
     }

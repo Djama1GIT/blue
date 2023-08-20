@@ -34,6 +34,25 @@ function App() {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
 
+  const sess = getCookie('session');
+  const fetchUser = async (sess) => {
+      if (sess !== session) {
+        const response = await axios.post(`${HOST}api/users/auth/`,
+                                           {}, { withCredentials: true });
+        if (!response.data.user) {
+          setSession('');
+          deleteCookie('session');
+        }
+        setUser(response.data.user);
+        setSession(getCookie('session'));
+      }
+
+      return user;
+    };
+
+  useEffect(() => {
+    if(!user) fetchUser(getCookie('session'));
+  }, [session]);
 
   return (
     <Router>
@@ -47,6 +66,7 @@ function App() {
                                              user={user}
                                              setUser={setUser}
                                              setSession={setSession}
+                                             fetchUser={fetchUser}
                             />}
             />
           ))}

@@ -183,9 +183,9 @@ th .name {
     text-align: center;
 }
 .__wrap_content {
-    display: grid;
+    display: inline-grid;
     justify-content: center;
-    grid-template-columns: max-content;
+    margin: 0 5em;
 }
 .acc h1,
 .acc h3,
@@ -217,12 +217,21 @@ th .name {
 .acc textarea {
     float: right;
     margin-left: 4em;
+    margin-bottom: 0.6em;
     background-color: #222;
     border: 1px solid #444;
     border-radius: 0.5em;
     color: #eee;
     padding: 0.5em;
     width: 32.7em;
+}
+.acc .image {
+    width: 20%;
+    justify-content: center;
+}
+.acc .image img {
+    height: 20em;
+    justify-content: center;
 }
 .secret .eye {
     line-height: 0;

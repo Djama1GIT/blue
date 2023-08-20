@@ -13,7 +13,6 @@ function Head({ session, setSession, user, setUser }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (accountSelectRef.current && !accountSelectRef.current.contains(event.target)) {
-        // Clicked outside of div.account-select, hide it
         accountSelectRef.current.style.display = 'none';
       }
     };
@@ -35,6 +34,7 @@ function Head({ session, setSession, user, setUser }) {
     try {
       await axios.post(`${HOST}api/users/logout/`, {}, { withCredentials: true });
       setUser(null);
+      setSession(null);
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -58,7 +58,7 @@ function Head({ session, setSession, user, setUser }) {
           <div className="user" onClick={handleUserClick}>
             <div className="account-select" ref={accountSelectRef}>
               <p>
-                <Link to="/account/">My account</Link>
+                <Link to="/account/">Settings</Link>
               </p>
               <p>
                 <Link to="/subscriptions/">My subscriptions</Link>
