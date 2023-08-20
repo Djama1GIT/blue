@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { HOST, NAME } from '../Consts';
 
-function Register() {
+function Register({ session, setSession, user, setUser }) {
   document.title = `${NAME} - Register`;
 
   const [login, setLogin] = useState('');
@@ -14,12 +14,10 @@ function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const sessionCookie = document.cookie.includes('session');
-
-    if (sessionCookie) {
+    if (session) {
       navigate("/");
     }
-  }, []);
+  }, [session]);
 
   const handleRegister = async () => {
     try {
@@ -58,8 +56,8 @@ function Register() {
   };
 
   return (
-    <div className="auth-content">
-      <div className="auth">
+    <div className="__content">
+      <div className="__wrap_content">
         <h1>Register</h1>
         <input
           type="text"

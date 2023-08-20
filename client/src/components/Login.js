@@ -42,14 +42,16 @@ function Login() {
       }, { withCredentials: true });
 
       navigate('/');
+      console.log(response);
+      console.log(document.cookie);
     } catch (error_) {
       setError(error_.response?.data.message);
     }
   };
 
   return (
-    <div className="auth-content">
-        <div className="auth">
+    <div className="__content">
+        <div className="__wrap_content">
             <h1>Login</h1>
             <input type="text" id="login" placeholder="Enter login" required value={login} onChange={(e) => setLogin(e.target.value)} />
             <input type="password" id="password" placeholder="Enter password" required value={password} onChange={(e) => setPassword(e.target.value)} />

@@ -4,28 +4,11 @@ import { NAME, HOST } from '../Consts';
 import { getCookie, deleteCookie } from '../Utils';
 import axios from 'axios';
 
-function Head() {
-  const [session, setSession] = useState(null);
-  const [user, setUser] = useState(null);
+function Head({ session, setSession, user, setUser }) {
   const location = useLocation();
   const navigate = useNavigate();
   const accountSelectRef = useRef(null);
 
-  useEffect(() => {
-    const sess = getCookie('session');
-    const fetchData = async () => {
-      if (sess !== session && sess !== '') {
-        const response = await axios.post(`${HOST}api/users/auth/`, {}, { withCredentials: true });
-        if (!response.data.user) {
-          setSession('');
-          deleteCookie('session');
-        }
-        setUser(response.data.user);
-      }
-    };
-    fetchData();
-    setSession(sess);
-  }, [location.pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,7 +26,6 @@ function Head() {
   }, []);
 
   const handleUserClick = () => {
-    // Clicked on div.user, show div.account-select
     if (accountSelectRef.current) {
       accountSelectRef.current.style.display = 'block';
     }
@@ -88,11 +70,11 @@ function Head() {
           </div>
         </>
       ) : (
-        <div className="account">
-          <Link to="/login/">
+        <Link to="/login/">
+          <div className="account">
             <span>👤</span>
-          </Link>
-        </div>
+          </div>
+        </Link>
       )}
     </div>
   );

@@ -69,7 +69,7 @@ function Content() {
       behavior: 'smooth',
     });
   };
-  console.log(mostPopular);
+
   return (
     <div className="content">
       {mostPopular && mostPopular[0] && <button className="prev-button" onClick={handlePrevButtonClick} ref={prevButtonRef}>

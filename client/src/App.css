@@ -169,10 +169,10 @@ th .name {
     position: absolute;
     width: calc(100% - 28em);
     text-align: left;
-    margin-left: 25em;
+    margin-left: 24em;
     margin-top: 3.2em;
 }
-.auth-content {
+.__content {
     display: block;
     position: absolute;
     height: 50%;
@@ -182,10 +182,57 @@ th .name {
     align-items: center;
     text-align: center;
 }
-.auth {
-    display: inline-grid;
+.__wrap_content {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: max-content;
 }
-.auth input {
+.acc h1,
+.acc h3,
+.acc p {
+    text-align: center;
+}
+.acc p {
+    line-height: 0;
+    margin-top: 2em;
+    font-weight: 600;
+    font-size: 14px;
+}
+.acc {
+    text-align: left;
+}
+.acc div {
+    margin-bottom: 0.2em;
+}
+.acc input {
+    float: right;
+    margin-left: 4em;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    color: #eee;
+    padding: 0.5em;
+    width: 25em;
+}
+.acc textarea {
+    float: right;
+    margin-left: 4em;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    color: #eee;
+    padding: 0.5em;
+    width: 32.7em;
+}
+.secret .eye {
+    line-height: 0;
+    margin-left: calc(100% - 1.7em);
+    margin-top: -2em;
+}
+.secret .eye:hover {
+    cursor: pointer;
+}
+.__content input {
     background-color: #222;
     border: 1px solid #444;
     border-radius: 0.5em;
@@ -194,7 +241,7 @@ th .name {
     padding: 0.5em 0.5em;
     width: 25em;
 }
-.auth p {
+.__content p {
     text-align: left;
 }
 
@@ -252,7 +299,7 @@ th .name {
   }
   .content {
     width: 100%;
-    margin-left: 1em;
+    margin-left: 0;
   }
   .most-popular .streams {
     display: flex;
@@ -272,7 +319,8 @@ th .name {
     grid-gap: 1em;
 }
 .category {
-    max-width: 92em;
+    max-width: 94em;
+    width: 105%;
 }
 .category .streams {
     display: flex;
@@ -283,6 +331,7 @@ th .name {
     overflow-x: scroll;
     overflow: hidden;
     width: 100%;
+    margin-left: 1em;
 }
 .most-popular .stream {
     flex: 0 0 21.3em;
@@ -297,7 +346,7 @@ th .name {
     white-space: nowrap;
     text-align: left;
 }
-.category .stream:not(:first-child) {
+.category .stream {
     margin-left: 1em;
 }
 .streamImage {
@@ -317,8 +366,9 @@ th .name {
     margin-top: -1.6em;
     font-size: 24px;
     font-weight: bold;
-    color: #499;
+    color: #0dd;
     margin-left: 11.4em;
+    text-shadow: 0 0 5px #200;
 }
 .stream .name {
     line-height: 0rem;
@@ -376,12 +426,12 @@ th .name {
     transition: background-color 0.3s ease;
 }
 .caption {
-    margin-left: 0.2em;
+    margin-left: 1.2em;
     margin-bottom: 0.4em;
     color: #eee;
     font-size: 18px;
 }
-.caption span{
+.caption span {
     color: #4af;
     font-size: 20px;
     font-weight: bold;
@@ -395,7 +445,7 @@ th .name {
     margin-top: 0.8em;
 }
 .streamsInCategories .category .caption {
-    margin-left: 0.2em;
+    margin-left: 1.2em;
     display: ruby;
     color: #eee;
     font-size: 18px;
