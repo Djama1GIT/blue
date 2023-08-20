@@ -18,12 +18,22 @@ class User(UserMixin, Base):
     stream_id = Column(UUID, ForeignKey('streams.id'), nullable=True)
     stream = relationship("Stream", back_populates="author")
 
-    def json(self):
+    def json_for_author(self):
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email,
             "hashed_token": self.hashed_token,
             "stream_id": self.stream_id,
-            "stream": self.stream,
+            "stream": self.stream.json_for_author() if self.stream else None,
+            "is_active": self.is_active,
+            "is_authenticated": self.is_authenticated,
+            "is_anonymous": self.is_anonymous,
+        }
+
+    def json_for_viewer(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "stream": self.stream.json_for_viewer() if self.stream else None
         }

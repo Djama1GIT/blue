@@ -19,9 +19,6 @@ function Account(props) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [streamName, setStreamName] = useState('loool');
-  const [streamToken, setStreamToken] = useState('lol');
-  const [streamSecretKey, setStreamSecretKey] = useState('lol');
-  const [streamForOBS, setStreamForOBS] = useState('lol');
   const [streamDescription, setStreamDescription] = useState('not lol');
 
   const navigate = useNavigate();
@@ -32,7 +29,8 @@ function Account(props) {
     if (!user) setUser(fetchUser(getCookie('session')));
     setUsername(user?.name);
     setEmail(user?.email);
-    setStreamToken(user?.token);
+    setStreamDescription(user?.stream?.description);
+    setStreamName(user?.stream?.name)
   }, [session]);
 
   const toggleVisibility = (type) => {
@@ -55,14 +53,18 @@ function Account(props) {
         </div>
         <div>Name: <input placeholder="Enter Stream Name" value={streamName} onChange={(e) => setStreamName(e.target.value)} /></div>
         <div>Description: <textarea placeholder="Enter Stream Description (optional)" value={streamDescription} onChange={(e) => setStreamDescription(e.target.value)} /></div>
-        <div>Token: <input value={streamToken} type="text" /></div>
-        <div>Secret-key: <input value={streamSecretKey} type={secretKeyType} /></div>
+        <div>Token: <input value={user?.stream?.token} type="text" /></div>
+        <div>Secret-key: <input value={user?.stream?.secret_key} type={secretKeyType} /></div>
         <div className="secret" id="secret-key" onClick={() => toggleVisibility("secret-key")}>
           <p className="eye">{showSecretKey ? "👁" : "👀️"}</p>
         </div>
-        <div>For OBS: <input value={streamForOBS} type={forOBSType} /></div>
+        <div>For OBS: <input value={`${user?.stream?.token}?key=${user?.stream?.secret_key}`} type={forOBSType} /></div>
         <div className="secret" id="for-obs" onClick={() => toggleVisibility("for-obs")}>
           <p className="eye">{showForOBS ? "👁" : "👀️"}</p>
+        </div>
+        <div className="buttons">
+            <button className="button">Regenerate secret</button>
+            <button className="button">Save changes</button>
         </div>
       </div>
       <div className="__wrap_content acc">

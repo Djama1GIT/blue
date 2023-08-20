@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, request, make_response
 from flask_login import login_required, logout_user, login_user, current_user
 
 from repositories import users as UsersRepository
+from repositories import streams as StreamsRepository
 
 bp = Blueprint('users', __name__, url_prefix='/api/users/')
 
@@ -20,6 +21,7 @@ def register():
     if user == UsersRepository.USER_ALREADY_EXISTS:
         return make_response({'message': 'A user with this login already exists'}, 409)
     else:
+        StreamsRepository.create(user.id)
         return make_response({}, 200)
 
 
@@ -43,4 +45,4 @@ def logout():
 
 @bp.route('/auth/', methods=['POST'])
 def authenticate():
-    return {"user": current_user.json() if current_user.is_authenticated else None}
+    return {"user": current_user.json_for_author() if current_user.is_authenticated else None}

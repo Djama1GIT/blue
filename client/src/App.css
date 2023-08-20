@@ -253,7 +253,23 @@ th .name {
 .__content p {
     text-align: left;
 }
-
+.button {
+    display: inline-flex;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 0.5em;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+    color: #eee;
+    padding: 0.4em 0.8em;
+}
+.buttons .button:last-child {
+    float: right;
+}
+.button:hover {
+    cursor: pointer;
+}
 .recovery_login-link:visited,
 .recovery_login-link {
     text-align: left;
