@@ -46,9 +46,8 @@ function Register({ session, setSession, user, setUser }) {
         password: password
       });
 
-      if (!response.data.message) {
-        navigate("/login/");
-      }
+      navigate("/login/");
+
     } catch (error_) {
       console.log(error_);
       setError(error_.response?.data.message);

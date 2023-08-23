@@ -1,6 +1,6 @@
 # Blue
 
-Blue is a project based on Python-Flask(REST) and Go-...(gRPC)
+Blue is a project based on Python(Flask)
 
 ## Installation and setup
 
@@ -13,9 +13,7 @@ git clone https://github.com/Djama1GIT/blue.git
 cd blue
 ```
 
-3. Configure environment variables in the .env file (not required if you don't plan to use email functionality).
-
-4. Run the project:
+3. Run the project:
 
 ```bash
 docker-compose up --build
@@ -23,17 +21,21 @@ docker-compose up --build
 
 ## User Interface
 
-Home Page: http://localhost:8000
+Home Page: http://localhost
 
 ## Technologies Used
 
 - Python - A high-level programming language used for developing various applications and services.
 - Flask - A framework for creating web applications in Python.
 - REST - An architectural style for building distributed systems based on the HTTP protocol.
-- Go - A programming language used for creating high-performance applications and services.
-- gRPC - A high-performance framework for creating distributed systems based on the RPC protocol.
-- Redis - A database used for storing data in memory.
+- WebSocket - A communication protocol that enables bidirectional data transfer between a client and a server in real-time.
 - PostgreSQL - A open-source relational database.
 - SQLAlchemy - A library for working with databases in Python.
-- Celery - A framework for processing tasks asynchronously.
-- Kafka - A distributed messaging system for real-time communication between different services.
+- Nginx - A high-performance web server and reverse proxy server.
+- Nginx-rtmp - An extension module for Nginx that adds RTMP (Real-Time Messaging Protocol) support for streaming audio and video content.
+
+## TODO
+- Admin panel
+- Caching
+- Email verification
+- Chat administration

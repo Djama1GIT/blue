@@ -7,18 +7,10 @@ services:
       - "5432:5432"
     restart: always
     env_file:
+      - .env
       - .env-non-dev
   #    volumes:
   #      - db_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:7
-    container_name: blue_redis
-    restart: always
-    env_file:
-      - .env-non-dev
-  #    volumes:
-  #      - redis_data:/app/data
 
   rtmp:
     build: ./streaming_service
@@ -29,7 +21,6 @@ services:
     container_name: blue_streaming_service
     depends_on:
       - db
-      - redis
       - server
   #    volumes:
   #      - rtmp_data:/app/data
@@ -37,15 +28,15 @@ services:
   server:
     build: ./server
     container_name: blue_server
-    command: sh -c "alembic upgrade head && cd app && flask run --host=0.0.0.0"
+    command: sh -c "alembic upgrade head && python manage.py && cd app && flask run --host=0.0.0.0"
     ports:
       - "5000:5000"
     restart: always
     env_file:
+      - .env
       - .env-non-dev
     depends_on:
       - db
-      - redis
   #    volumes:
   #      - server_data:/app/data
 
@@ -56,10 +47,10 @@ services:
       - "5555:5555"
     restart: always
     env_file:
+      - .env
       - .env-non-dev
     depends_on:
       - db
-      - redis
       - rtmp
   #    volumes:
   #      - chat_data:/app/data
@@ -72,7 +63,6 @@ services:
     container_name: blue_client
     depends_on:
       - db
-      - redis
       - server
       - chat
       - rtmp
@@ -81,7 +71,6 @@ services:
 
 #volumes:
 #  db_data
-#  redis_data
 #  rtmp_data
 #  server_data:
 #  chat_data:

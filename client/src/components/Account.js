@@ -75,6 +75,9 @@ function Account(props) {
         <div>Old password: <input id="old_password" placeholder="Enter Old Password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} /></div>
         <div>New password: <input id="new_password" placeholder="Enter New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} /></div>
         <div>Confirm password: <input id="confirm_password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} /></div>
+        <div className="buttons">
+            <button className="button">Save changes</button>
+        </div>
       </div>
     </div>
   );
