@@ -43,17 +43,21 @@ function Content() {
   }, []);
 
   const streamUnparser = ({ id, author, name, viewers, fake }) => (
-    <div className="stream" key={id}>
-      <Link to={!fake ? `/stream/${id}/` : `stream/fake/`}>
-        <img src={`${PREVIEWS_URL}${id}.png`} className="streamImage" alt="" />
-        {fake && <p className="fake">FAKE</p>}
-        <p className="viewers">Viewers:⠀{viewers}</p>
-        <div className="about">
-          <p className="name">{name}</p>
-          <p className="author">{author}</p>
-        </div>
-      </Link>
-    </div>
+    <>
+        {author && <div className="stream" key={id}>
+          <Link to={!fake ? `/stream/${id}/` : `stream/fake/`}>
+            <img src={`${PREVIEWS_URL}${id}.png`} className="streamImage" alt="" onError={(e) => {
+                    e.target.src = `http://localhost:5000/static/media/previews/default.png`;
+                }}/>
+            {fake ? <p className="fake">FAKE</p> : <p/>}
+                <p className="viewers">Viewers:⠀{viewers}</p>
+                <div className="about">
+                  <p className="name">{name}</p>
+                  <p className="author">{author.name}</p>
+                </div>
+          </Link>
+        </div>}
+    </>
   );
 
   const handlePrevButtonClick = () => {

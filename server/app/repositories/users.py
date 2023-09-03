@@ -30,6 +30,7 @@ def register(login_, password):
     db.session.add(new_user)
     db.session.commit()
     streams.create(author_id=id_)
+    return new_user
 
 
 def login(login_, password):

@@ -431,7 +431,7 @@ th .name {
     background-color: rgba(50, 50, 50, 0.6);
 }
 .prev-button {
-    left: 0.5em;
+    left: 1.5em;
 }
 .next-button {
     right: 0.5em;
@@ -695,7 +695,9 @@ th .name {
 }
 video {
     width: 100%;
-    height: auto;
+    height: 38.45vw;
+    background-image: url('http://localhost:5000/static/media/previews/default.png');
+    background-size: 100%;
 }
 #video-controls {
     position: absolute;
@@ -710,6 +712,9 @@ video {
     bottom: 0;
     left: 0;
     width: 100%;
+}
+#video-player-container:fullscreen video {
+    height: 100%;
 }
 #play {
     position: absolute;

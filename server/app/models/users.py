@@ -37,3 +37,9 @@ class User(UserMixin, Base):
             "name": self.name,
             "stream": self.stream.json_for_viewer() if self.stream else None
         }
+
+    def json_for_viewer_without_stream(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }

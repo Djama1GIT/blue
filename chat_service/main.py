@@ -1,15 +1,18 @@
 import asyncio
 import logging
+import os
+import dotenv
 import websockets
 
 from hall import Hall
 from viewer import Viewer
 
-PORT = 5555
-
-counter = 0
+dotenv.load_dotenv()
+SERVICE_PORT = int(os.getenv("CHAT_SERVICE_PORT", 5555))
 
 logging.basicConfig(level=logging.INFO)
+
+counter = 0
 
 
 async def handle_client(websocket: websockets.WebSocketServerProtocol, path) -> None:
@@ -27,8 +30,8 @@ async def handle_client(websocket: websockets.WebSocketServerProtocol, path) -> 
 
 
 hall = Hall()
-start_server = websockets.serve(handle_client, "blue_chat_service", PORT)
+start_server = websockets.serve(handle_client, "blue_chat_service", SERVICE_PORT)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
-logging.info('Chat Server Started at port %s', PORT)
+logging.info('Chat Server Started at port %s', SERVICE_PORT)

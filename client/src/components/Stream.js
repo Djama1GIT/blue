@@ -42,8 +42,8 @@ function Stream() {
             <span className="viewers">Viewers: {streamData.viewers}</span>
           </p>
           <p className="author">
-            <img src={`${AVATARS_URL}${streamData.id}.png`} alt="" />
-            <span>{streamData.author}</span>
+            <img src={`${AVATARS_URL}${streamData.author.id}.png`} alt="" />
+            <span>{streamData.author.name}</span>
             <button className="subscribe">Subscribe</button>
           </p>
         </div>
