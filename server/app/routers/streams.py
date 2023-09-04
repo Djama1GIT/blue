@@ -1,5 +1,5 @@
 from flask import Blueprint, request, make_response
-from static.fake import categories, most_popular, popular_in_categories, stream as fake_stream
+from static.fake import categories, most_popular, recommended, popular_in_categories, stream as fake_stream
 from config import FAKE_DATA  # This is only for front-end demo
 from models.streams import Stream
 from repositories import streams as StreamsRepository
@@ -77,3 +77,25 @@ def get_streams_in_category(category):
         "category": category,
         "streams": [i.json_for_viewer() for i in streams_in_category]
     }
+
+
+@bp.route('/recommended/', methods=['GET'])
+def get_recommended():
+    recommended_list = StreamsRepository.get_active_popular_streams()[:6]
+    return recommended_list + (recommended[:6 - len(recommended_list)] if FAKE_DATA else [])
+
+
+@bp.route('/viewers/increment', methods=['POST'])
+def increment_viewers():
+    if request.form['key'] == "chat_secret":
+        StreamsRepository.increment_viewers(request.form['token'])
+        return make_response({}, 200)
+    return make_response({}, 400)
+
+
+@bp.route('/viewers/decrement', methods=['POST'])
+def decrement_viewers():
+    if request.form['key'] == "chat_secret":
+        StreamsRepository.decrement_viewers(request.form['token'])
+        return make_response({}, 200)
+    return make_response({}, 400)

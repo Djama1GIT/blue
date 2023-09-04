@@ -4,6 +4,7 @@ from db import db
 from models.users import User
 from models.streams import Stream
 from config import SECRET_KEY
+from sqlalchemy import desc
 
 from . import streams
 
@@ -47,3 +48,9 @@ def login(login_, password):
 
 def hash_pw(password):
     return bcrypt.hashpw(password.encode(), SECRET_KEY.encode()).decode()
+
+
+def get_popular_streamers():
+    streamers: list[User] = User.query.limit(5).all()  # TODO: max viewers
+    streamers: list[dict] = [streamer.json_for_viewer() for streamer in streamers]
+    return streamers

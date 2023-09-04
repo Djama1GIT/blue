@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { DOMAIN, AVATARS_URL } from '../Consts'
+import { getCookie } from '../Utils';
 
-function Chat() {
+function Chat({ stream_token, viewer }) {
   const MAX_MESSAGES = 150;
 
   const chatRef = useRef(null);
@@ -16,8 +17,9 @@ function Chat() {
 
     socket.onopen = function (event) {
       socketRef.current.send(JSON.stringify({"action": "join",
-                                             "author": "GADJIIAVOV",
-                                             "room_name": "stream-hashed-token-space-user-hashed-token"}));
+                                             "session": getCookie('session'),
+                                             "token": stream_token
+                                             }));
       setIsConnected(true);
     };
 

@@ -8,13 +8,13 @@ function Sidebar() {
   const [top, setTop] = useState(null);
 
   async function fetchRecommended() {
-    const response = await fetch(`${HOST}api/recommended/`);
+    const response = await fetch(`${HOST}api/streams/recommended/`);
     const data = await response.json();
     return data;
   }
 
   async function fetchTop() {
-    const response = await fetch(`${HOST}api/top/`);
+    const response = await fetch(`${HOST}api/users/top/`);
     const data = await response.json();
     return data;
   }
@@ -42,7 +42,7 @@ function Sidebar() {
                   <th>
                     <img className="avatar" src={`${AVATARS_URL}${recommendItem.id}.png`} alt="" />
                     <div className="name">
-                      {recommendItem.author} - {recommendItem.name}
+                      {recommendItem.author.name} - {recommendItem.name}
                     </div>
                   </th>
                 </Link>
@@ -63,7 +63,7 @@ function Sidebar() {
                   <th>
                     <img className="avatar" src={`${AVATARS_URL}${streamerItem.id}.png`} alt="" />
                     <div className="name">
-                      {index + 1}. {streamerItem.author}
+                      {index + 1}. {streamerItem.name}
                     </div>
                   </th>
                 </Link>

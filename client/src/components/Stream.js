@@ -6,7 +6,7 @@ import { HOST, AVATARS_URL } from '../Consts'
 import Player from './Player';
 import Chat from './Chat'
 
-function Stream() {
+function Stream({ session, setSession, user, setUser, fetchUser }) {
   const { id } = useParams();
   const [streamData, setStreamData] = useState(null);
 
@@ -48,7 +48,7 @@ function Stream() {
           </p>
         </div>
       </div>
-      <Chat />
+      <Chat stream_token={streamData.token} viewer={user}/>
     </div>
   );
 }

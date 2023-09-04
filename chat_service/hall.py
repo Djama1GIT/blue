@@ -1,5 +1,6 @@
 import json
 
+import requests
 from stream_room import StreamRoom
 from viewer import Viewer
 
@@ -24,7 +25,7 @@ class Hall:
             await viewer.socket.close()
 
     async def handle_join(self, viewer: Viewer, data: dict) -> None:
-        room_name = data.get("room_name")
+        room_name = data.get("token")
         if room_name:
             if viewer.id in self.room_viewer_map:
                 if self.room_viewer_map[viewer.id] == room_name:
@@ -41,9 +42,22 @@ class Hall:
                 self.rooms[room_name] = new_room
             self.rooms[room_name].players.append(viewer)
             self.room_viewer_map[viewer.id] = room_name
-            viewer.name = data.get("author")
-            # TODO: author должен быть токеном,
-            #  а player.name устанавливаться после аутентификации
+
+            requests.post("http://blue_server:5000/api/streams/viewers/increment", {
+                "key": "chat_secret",
+                "token": room_name,
+            })  # TODO: сделать проверку на двойное подключение
+
+            try:
+                response = requests.post("http://blue_server:5000/api/users/auth/", cookies={
+                    "session": data.get('session')
+                })
+                viewer.name = response.json().get("user").get("name")
+            except:
+                await viewer.socket.send(json.dumps({
+                    "author": "Error",
+                    "message": "Please log in to send messages to the chat"
+                }))
         else:
             await viewer.socket.send(json.dumps({
                 "error": "Invalid room name"
@@ -51,7 +65,12 @@ class Hall:
             await viewer.socket.close()
 
     async def handle_chat(self, viewer: Viewer, data: dict) -> None:
-        if viewer.id in self.room_viewer_map:
+        if viewer.name == "Unidentified guest":
+            await viewer.socket.send(json.dumps({
+                "author": "Error",
+                "message": "Please log in"
+            }))
+        elif viewer.id in self.room_viewer_map:
             room = self.rooms[self.room_viewer_map[viewer.id]]
             message = data.get("message")
             if message:
@@ -70,4 +89,8 @@ class Hall:
     async def remove_player(self, viewer: Viewer) -> None:
         if viewer.id in self.room_viewer_map:
             await self.rooms[self.room_viewer_map[viewer.id]].remove_player(viewer)
+            requests.post("http://blue_server:5000/api/streams/viewers/decrement", {
+                "key": "chat_secret",
+                "token": self.room_viewer_map[viewer.id],
+            })
             del self.room_viewer_map[viewer.id]

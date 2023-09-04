@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
 
-from routers import home, streams, chat, users
+from routers import streams, chat, users
 from config import DATABASE_URL, SECRET_KEY
 from models.users import User
 from db import db
@@ -25,7 +25,6 @@ def get_by_id(user_id):
     return User.query.get(user_id)
 
 
-app.register_blueprint(home.bp)
 app.register_blueprint(streams.bp)
 app.register_blueprint(chat.bp)
 app.register_blueprint(users.bp)

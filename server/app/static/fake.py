@@ -1,59 +1,59 @@
 recommended = [
     {
         "id": 5,
-        "author": "Delphizz",
+        "author": {"name": "Delphizz"},
         "name": "Играем в Game Name",
     },
     {
         "id": 1,
-        "author": "illill",
+        "author": {"name": "illill"},
         "name": "WHO AM I?",
     },
     {
         "id": 2,
-        "author": "TheStone",
+        "author": {"name": "TheStone"},
         "name": "Болтаем",
     },
     {
         "id": 4,
-        "author": "FLUFFY",
+        "author": {"name": "FLUFFY"},
         "name": "Играем в Minecraft",
     },
     {
         "id": 3,
-        "author": "Enrico_Hokage",
+        "author": {"name": "Enrico_Hokage"},
         "name": "CТРИМЛЮ SA:MP 24/7",
     },
     {
         "id": 6,
-        "author": "GADJIIAVOV",
+        "author": {"name": "GADJIIAVOV"},
         "name": "Пишу этот сайт",
     },
 ]
 top = [
     {
         "id": 5,
-        "author": "Delphizz"
+        "name": "Delphizz"
     },
     {
         "id": 1,
-        "author": "illill"
+        "name": "illill"
     },
     {
         "id": 2,
-        "author": "TheStone"
+        "name": "TheStone"
     },
     {
         "id": 4,
-        "author": "FLUFFY"
+        "name": "FLUFFY"
     },
     {
         "id": 3,
-        "author": "Enrico_Hokage"
+        "name": "Enrico_Hokage"
     },
     {
         "id": 6,
-        "author": "GADJIIAVOV"
+        "name": "GADJIIAVOV"
     },
 ]
 categories = ["Video-games", "Sport", "IT", "Music", "News", "Movies", "Cooking", "Fitness", "Fashion", "Travel"]
@@ -169,7 +169,9 @@ popular_in_categories = [
 ]
 stream = {
     "id": 6,
-    "author": "GADJIIAVOV",
+    "author": {
+        "name": "GADJIIAVOV"
+    },
     "name": "Fake Stream Page",
     "token": "token",
     "viewers": 120,

@@ -4,6 +4,9 @@ from flask_login import login_required, logout_user, login_user, current_user
 from repositories import users as UsersRepository
 from repositories import streams as StreamsRepository
 
+from static.fake import top
+from config import FAKE_DATA
+
 bp = Blueprint('users', __name__, url_prefix='/api/users/')
 
 app = Flask(__name__)
@@ -46,3 +49,9 @@ def logout():
 @bp.route('/auth/', methods=['POST'])
 def authenticate():
     return {"user": current_user.json_for_author() if current_user.is_authenticated else None}
+
+
+@bp.route('/top/', methods=['GET'])
+def get_top():
+    top_list = UsersRepository.get_popular_streamers()
+    return top_list + (top[:6 - len(top_list)] if FAKE_DATA else [])
