@@ -85,7 +85,7 @@ def get_recommended():
     return recommended_list + (recommended[:6 - len(recommended_list)] if FAKE_DATA else [])
 
 
-@bp.route('/viewers/increment', methods=['POST'])
+@bp.route('/viewers/increment/', methods=['POST'])
 def increment_viewers():
     if request.form['key'] == "chat_secret":
         StreamsRepository.increment_viewers(request.form['token'])
@@ -93,7 +93,7 @@ def increment_viewers():
     return make_response({}, 400)
 
 
-@bp.route('/viewers/decrement', methods=['POST'])
+@bp.route('/viewers/decrement/', methods=['POST'])
 def decrement_viewers():
     if request.form['key'] == "chat_secret":
         StreamsRepository.decrement_viewers(request.form['token'])
