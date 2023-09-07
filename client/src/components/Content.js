@@ -46,9 +46,7 @@ function Content() {
     <>
         {author && <div className="stream" key={id}>
           <Link to={!fake ? `/stream/${id}/` : `stream/fake/`}>
-            <img src={`${PREVIEWS_URL}${id}.png`} className="streamImage" alt="" onError={(e) => {
-                    e.target.src = `http://localhost:5000/static/media/previews/default.png`;
-                }}/>
+            <img src={`${PREVIEWS_URL}${author.id}.png`} className="streamImage" alt=""/>
             {fake ? <p className="fake">FAKE</p> : <p/>}
                 <p className="viewers">Viewers:⠀{viewers}</p>
                 <div className="about">

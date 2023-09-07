@@ -11,6 +11,7 @@ from . import streams
 USER_DOES_NOT_EXIST = -1
 USER_ALREADY_EXISTS = -2
 INCORRECT_PASSWORD = -3
+INCORRECT_NEW_PASSWORD = -4
 
 
 def register(login_, password):
@@ -54,3 +55,23 @@ def get_popular_streamers():
     streamers: list[User] = User.query.limit(5).all()  # TODO: max viewers
     streamers: list[dict] = [streamer.json_for_viewer() for streamer in streamers]
     return streamers
+
+
+def get_user_by_id(id_: str):
+    return User.query.filter_by(id=id_).first()
+
+
+def update_user_settings_by_id(id_: str, username: str, email: str, old_password: str = None, new_password: str = None):
+    user = get_user_by_id(id_)
+    user.name = username
+    user.email = email
+    if old_password and new_password:
+        if hash_pw(old_password) != user.hashed_password:
+            return INCORRECT_PASSWORD
+        elif len(new_password) < 8:
+            return INCORRECT_NEW_PASSWORD
+        else:
+            user.hashed_password = hash_pw(new_password)
+            db.session.commit()
+    else:
+        db.session.commit()

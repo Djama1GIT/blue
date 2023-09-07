@@ -43,21 +43,20 @@ class Hall:
             self.rooms[room_name].members.append(viewer)
             self.room_viewer_map[viewer.id] = room_name
 
-            user = {}
             try:
                 response = requests.post("http://blue_server:5000/api/users/auth/", cookies={
                     "session": data.get('session')
                 })
                 user = response.json().get("user")
                 viewer.is_anonymous = False
+                if user and "name" in user:
+                    viewer.name = user.get("name")
+                viewer.uuid = user.get("id")
             except:
                 await viewer.socket.send(json.dumps({
                     "author": "Error",
                     "message": "Please log in to send messages to the chat"
                 }))
-            finally:
-                if user and "name" in user:
-                    viewer.name = user.get("name")
 
                 print(self.rooms[room_name].members_[viewer.name])
                 self.rooms[room_name].members_[viewer.name] += 1
@@ -76,6 +75,7 @@ class Hall:
         if viewer.is_anonymous:
             await viewer.socket.send(json.dumps({
                 "author": "Error",
+                "author_id": viewer.uuid,  # TODO
                 "message": "Please log in"
             }))
         elif viewer.id in self.room_viewer_map:

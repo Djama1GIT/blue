@@ -7,7 +7,7 @@ class Stream(Base):
     __tablename__ = 'streams'
 
     id = Column(UUID, primary_key=True, index=True)
-    name = Column(String(30), nullable=False, default="")
+    name = Column(String(120), nullable=False, default="")
     description = Column(String(2000), nullable=True, default="")
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
     token = Column(String(80), nullable=False)

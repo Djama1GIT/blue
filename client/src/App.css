@@ -156,7 +156,9 @@ a {
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    background-color: #000;
+    object-fit: cover;
+    background-image: url('http://localhost:5000/media/avatars/default.png');
+    background-size: 100%;
 }
 th .name {
     margin-left: 1em;
@@ -231,7 +233,26 @@ th .name {
 }
 .acc .image img {
     height: 20em;
+    width: 35.55em;
     justify-content: center;
+}
+.acc #avatar-image img {
+    width: 20em!important;
+    height: 20em!important;
+    background-image: url('http://localhost:5000/media/avatars/default.png');
+    background-size: 100%;
+}
+.uploader {
+    width: 97%!important;
+    margin-left: 0!important;
+}
+.error {
+    color: #f33;
+    float: right;
+}
+.success {
+    color: #3f3;
+    float: right;
 }
 .secret .eye {
     line-height: 0;
@@ -521,6 +542,8 @@ th .name {
     height: 2em;
     border-radius: 50%;
     background-color: #000;
+    background-image: url('http://localhost:5000/media/avatars/default.png');
+    background-size: 100%;
 }
 .stream-data .author span {
     position: absolute;
@@ -568,6 +591,8 @@ th .name {
     height: 2em;
     border-radius: 50%;
     background-color: #000;
+    background-image: url('http://localhost:5000/media/avatars/default.png');
+    background-size: 100%;
 }
 .chat .message div {
     display: block;
@@ -696,7 +721,7 @@ th .name {
 video {
     width: 100%;
     height: 38.45vw;
-    background-image: url('http://localhost:5000/static/media/previews/default.png');
+    background-image: url('http://localhost:5000/media/previews/default.png');
     background-size: 100%;
 }
 #video-controls {

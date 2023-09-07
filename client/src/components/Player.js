@@ -95,7 +95,7 @@ function Player({ streamData }) {
     <div id="video-player-container">
       <ReactHlsPlayer
         src={`http://127.0.0.1:8080/hls/${streamData.token}.m3u8`}
-        poster={`${PREVIEWS_URL}${streamData.id}.png`}
+        poster={`${PREVIEWS_URL}${streamData.author.id}.png`}
         id="video"
         playerRef={playerRef}
         onClick={togglePlay}

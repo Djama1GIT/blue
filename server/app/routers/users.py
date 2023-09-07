@@ -51,6 +51,27 @@ def authenticate():
     return {"user": current_user.json_for_author() if current_user.is_authenticated else None}
 
 
+@bp.route('/settings/', methods=['PATCH'])
+@login_required
+def update_user_settings():
+    error = UsersRepository.update_user_settings_by_id(
+        current_user.id.__str__(),
+        request.form.get('username'),
+        request.form.get('email'),
+        request.form.get('old_password'),
+        request.form.get('new_password'),
+    )
+    if error:
+        if error == UsersRepository.INCORRECT_PASSWORD:
+            return make_response({'message': 'Incorrect old password'}, 418)
+        elif error == UsersRepository.INCORRECT_NEW_PASSWORD:
+            return make_response({'message': 'Incorrect new password'}, 418)
+        else:
+            return make_response({'message': 'Invalid data'}, 418)
+    else:
+        return make_response({}, 200)
+
+
 @bp.route('/top/', methods=['GET'])
 def get_top():
     top_list = UsersRepository.get_popular_streamers()

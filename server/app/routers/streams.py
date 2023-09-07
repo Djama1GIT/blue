@@ -1,4 +1,5 @@
 from flask import Blueprint, request, make_response
+from flask_login import login_required, current_user
 from static.fake import categories, most_popular, recommended, popular_in_categories, stream as fake_stream
 from config import FAKE_DATA  # This is only for front-end demo
 from models.streams import Stream
@@ -68,6 +69,28 @@ def get_stream(uuid):
         return stream.json_for_viewer()
     else:
         return make_response({}, 404)  # TODO
+
+
+@bp.route('/stream/settings/regenerate-secret/', methods=['POST'])
+@login_required
+def regenerate_secret():
+    new_secret = StreamsRepository.regenerate_secret_by_token(current_user.stream.token)
+    return make_response({
+        'secret_key': new_secret,
+    }, 200)
+
+
+@bp.route('/stream/settings/', methods=['PATCH'])
+@login_required
+def update_stream_settings():
+    if not request.form.get('name'):
+        return make_response({}, 418)
+    StreamsRepository.update_stream_settings(
+        current_user.stream.token,
+        request.form.get('name'),
+        request.form.get('description'),
+    )
+    return make_response({}, 200)
 
 
 @bp.route('/<category>/', methods=['GET'])

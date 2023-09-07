@@ -90,7 +90,7 @@ function Chat({ stream_token, viewer }) {
             {!message.error && (
                <p className="message" key={index}>
                  <span>
-                   <img src={`${AVATARS_URL}6.png`} alt="" />
+                   <img src={`${AVATARS_URL}${message.author_id}.png`} alt="" />
                  </span>
                  <div className="about">
                    <span className="author">{message.author}</span>

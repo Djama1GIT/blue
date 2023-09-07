@@ -111,5 +111,21 @@ def decrement_viewers(token: str) -> None:
         db.session.commit()
 
 
+def regenerate_secret_by_token(token: str) -> str:
+    stream = get_stream_by_token(token)
+    if stream:
+        stream.secret_key = generate_code()
+        db.session.commit()
+    return stream.secret_key
+
+
+def update_stream_settings(token: str, name: str, description: str) -> None:
+    stream = get_stream_by_token(token)
+    if stream:
+        stream.name = name
+        stream.description = description
+        db.session.commit()
+
+
 def get_categories() -> list[str]:
     return [category.name for category in Category.query.all()]

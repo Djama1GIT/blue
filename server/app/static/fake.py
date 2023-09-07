@@ -3,64 +3,76 @@ recommended = [
         "id": 5,
         "author": {"name": "Delphizz"},
         "name": "Играем в Game Name",
+        "fake": True
     },
     {
         "id": 1,
         "author": {"name": "illill"},
         "name": "WHO AM I?",
+        "fake": True
     },
     {
         "id": 2,
         "author": {"name": "TheStone"},
         "name": "Болтаем",
+        "fake": True
     },
     {
         "id": 4,
         "author": {"name": "FLUFFY"},
         "name": "Играем в Minecraft",
+        "fake": True
     },
     {
         "id": 3,
         "author": {"name": "Enrico_Hokage"},
         "name": "CТРИМЛЮ SA:MP 24/7",
+        "fake": True
     },
     {
         "id": 6,
         "author": {"name": "GADJIIAVOV"},
         "name": "Пишу этот сайт",
+        "fake": True
     },
 ]
 top = [
     {
         "id": 5,
-        "name": "Delphizz"
+        "name": "Delphizz",
+        "fake": True
     },
     {
         "id": 1,
-        "name": "illill"
+        "name": "illill",
+        "fake": True
     },
     {
         "id": 2,
-        "name": "TheStone"
+        "name": "TheStone",
+        "fake": True
     },
     {
         "id": 4,
-        "name": "FLUFFY"
+        "name": "FLUFFY",
+        "fake": True
     },
     {
         "id": 3,
-        "name": "Enrico_Hokage"
+        "name": "Enrico_Hokage",
+        "fake": True
     },
     {
         "id": 6,
-        "name": "GADJIIAVOV"
+        "name": "GADJIIAVOV",
+        "fake": True
     },
 ]
 categories = ["Video-games", "Sport", "IT", "Music", "News", "Movies", "Cooking", "Fitness", "Fashion", "Travel"]
 most_popular = [
     {
         "id": 1,
-        "author": {"name": "illill"},
+        "author": {"id": 1, "name": "illill"},
         "name": "WHO AM I?",
         "category": "Video-games",
         "viewers": 2,
@@ -68,7 +80,7 @@ most_popular = [
     },
     {
         "id": 2,
-        "author": {"name": "TheStone"},
+        "author": {"id": 2, "name": "TheStone"},
         "name": "Болтаем",
         "category": "Video-games",
         "viewers": 10,
@@ -76,7 +88,7 @@ most_popular = [
     },
     {
         "id": 3,
-        "author": {"name": "Enrico_Hokage"},
+        "author": {"id": 3, "name": "Enrico_Hokage"},
         "name": "CТРИМЛЮ SA:MP 24/7",
         "category": "Video-games",
         "viewers": 24,
@@ -84,7 +96,7 @@ most_popular = [
     },
     {
         "id": 5,
-        "author": {"name": "Delphizz"},
+        "author": {"id": 5, "name": "Delphizz"},
         "name": "Играем в Game Name",
         "category": "Sport",
         "viewers": 35,
@@ -92,7 +104,7 @@ most_popular = [
     },
     {
         "id": 4,
-        "author": {"name": "FLUFFY"},
+        "author": {"id": 4, "name": "FLUFFY"},
         "name": "Играем в Minecraft",
         "category": "Video-games",
         "viewers": 7,
@@ -100,7 +112,7 @@ most_popular = [
     },
     {
         "id": 6,
-        "author": {"name": "GADJIIAVOV"},
+        "author": {"id": 6, "name": "GADJIIAVOV"},
         "name": "Пишу этот сайт",
         "category": "IT",
         "viewers": 120,
@@ -113,28 +125,28 @@ popular_in_categories = [
         "items": [
             {
                 "id": 1,
-                "author": {"name": "illill"},
+                "author": {"id": 1, "name": "illill"},
                 "name": "WHO AM I?",
                 "viewers": 2,
                 "fake": True,
             },
             {
                 "id": 2,
-                "author": {"name": "TheStone"},
+                "author": {"id": 2, "name": "TheStone"},
                 "name": "Болтаем",
                 "viewers": 10,
                 "fake": True,
             },
             {
                 "id": 3,
-                "author": {"name": "Enrico_Hokage"},
+                "author": {"id": 3, "name": "Enrico_Hokage"},
                 "name": "CТРИМЛЮ SA:MP 24/7",
                 "viewers": 24,
                 "fake": True,
             },
             {
                 "id": 4,
-                "author": {"name": "FLUFFY"},
+                "author": {"id": 4, "name": "FLUFFY"},
                 "name": "Играем в Minecraft",
                 "viewers": 7,
                 "fake": True,
@@ -146,7 +158,7 @@ popular_in_categories = [
         "items": [
             {
                 "id": 5,
-                "author": {"name": "Delphizz"},
+                "author": {"id": 5, "name": "Delphizz"},
                 "name": "Играем в Game Name",
                 "viewers": 35,
                 "fake": True,
@@ -158,7 +170,7 @@ popular_in_categories = [
         "items": [
             {
                 "id": 6,
-                "author": {"name": "GADJIIAVOV"},
+                "author": {"id": 6, "name": "GADJIIAVOV"},
                 "name": "Пишу этот сайт",
                 "viewers": 120,
                 "fake": True,
@@ -170,6 +182,7 @@ popular_in_categories = [
 stream = {
     "id": 6,
     "author": {
+        "id": 6,
         "name": "GADJIIAVOV"
     },
     "name": "Fake Stream Page",
