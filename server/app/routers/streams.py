@@ -74,7 +74,7 @@ def get_stream(uuid):
 @bp.route('/stream/settings/regenerate-secret/', methods=['POST'])
 @login_required
 def regenerate_secret():
-    new_secret = StreamsRepository.regenerate_secret_by_token(current_user.stream.uuid)
+    new_secret = StreamsRepository.regenerate_secret_by_token(current_user.stream.token)
     return make_response({
         'secret_key': new_secret,
     }, 200)
@@ -86,7 +86,7 @@ def update_stream_settings():
     if not request.form.get('name'):
         return make_response({}, 418)
     StreamsRepository.update_stream_settings(
-        current_user.stream.uuid,
+        current_user.stream.token,
         request.form.get('name'),
         request.form.get('description'),
     )
