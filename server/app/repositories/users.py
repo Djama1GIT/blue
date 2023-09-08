@@ -63,7 +63,7 @@ def get_user_by_id(id_: str):
 
 def update_user_settings_by_id(id_: str, username: str, email: str, old_password: str = None, new_password: str = None):
     user = get_user_by_id(id_)
-    user.name = username
+    user.uuid = username
     user.email = email
     if old_password and new_password:
         if hash_pw(old_password) != user.hashed_password:

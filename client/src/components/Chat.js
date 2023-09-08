@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DOMAIN, AVATARS_URL } from '../Consts'
 import { getCookie } from '../Utils';
 
-function Chat({ stream_token, viewer }) {
+function Chat({ stream_id, viewer }) {
   const MAX_MESSAGES = 150;
 
   const chatRef = useRef(null);
@@ -18,7 +18,7 @@ function Chat({ stream_token, viewer }) {
     socket.onopen = function (event) {
       socketRef.current.send(JSON.stringify({"action": "join",
                                              "session": getCookie('session'),
-                                             "token": stream_token
+                                             "token": stream_id
                                              }));
       setIsConnected(true);
     };

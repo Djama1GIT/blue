@@ -180,13 +180,14 @@ popular_in_categories = [
 
 ]
 stream = {
-    "id": 6,
+    "id": "fake",
     "author": {
-        "id": 6,
+        "id": "fake",
         "name": "GADJIIAVOV"
     },
     "name": "Fake Stream Page",
     "token": "token",
     "viewers": 120,
+    "is_active": True,
     "fake": True,
 }

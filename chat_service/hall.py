@@ -75,7 +75,7 @@ class Hall:
         if viewer.is_anonymous:
             await viewer.socket.send(json.dumps({
                 "author": "Error",
-                "author_id": viewer.uuid,  # TODO
+                "author_id": "error_id",
                 "message": "Please log in"
             }))
         elif viewer.id in self.room_viewer_map:

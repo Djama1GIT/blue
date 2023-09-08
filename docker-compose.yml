@@ -37,8 +37,8 @@ services:
       - .env-non-dev
     depends_on:
       - db
-  #    volumes:
-  #      - server_data:/app/data
+    volumes:
+      - server_data:/app/data
 
   chat:
     build: ./chat_service
@@ -69,9 +69,9 @@ services:
 #    volumes:
 #      - client_data:/app/data
 
-#volumes:
+volumes:
 #  db_data
 #  rtmp_data
-#  server_data:
+  server_data:
 #  chat_data:
 #  client_data:

@@ -92,14 +92,17 @@ function Account(props) {
     if (oldPassword != '') {
         if (newPassword == '') {
           setUserError('Incorrect new password');
+          setUserSuccess('')
           return
         }
         else if (newPassword.length < 8) {
           setUserError('The new password is too short');
+          setUserSuccess('')
           return
         }
         else if (newPassword != confirmPassword) {
           setUserError('Passwords don\'t match');
+          setUserSuccess('')
           return
         }
         else {

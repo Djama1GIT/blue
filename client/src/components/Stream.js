@@ -48,7 +48,7 @@ function Stream({ session, setSession, user, setUser, fetchUser }) {
           </p>
         </div>
       </div>
-      <Chat stream_token={streamData.token} viewer={user}/>
+      <Chat stream_id={streamData.id} viewer={user}/>
     </div>
   );
 }
