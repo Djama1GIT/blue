@@ -76,3 +76,11 @@ def update_user_settings():
 def get_top():
     top_list = UsersRepository.get_popular_streamers()
     return top_list + (top[:6 - len(top_list)] if FAKE_DATA else [])
+
+
+@bp.route('/user/<uuid_>/', methods=['GET'])
+def get_user_by_id(uuid_):
+    user = UsersRepository.get_user_by_id(uuid_)
+    if not user:
+        return make_response({"message": "User does not exist"}, 404)
+    return make_response(user.json_for_viewer(), 200)

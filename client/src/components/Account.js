@@ -5,8 +5,7 @@ import axios from 'axios';
 import { HOST, NAME, AVATARS_URL, PREVIEWS_URL } from '../Consts'
 import { getCookie, deleteCookie } from '../Utils';
 
-function Account(props) {
-  const { session, setSession, user, setUser, fetchUser } = props;
+function Account({ session, setSession, user, setUser, fetchUser }) {
   document.title = `${NAME} - My Account`;
 
   const [previewFile, setPreviewFile] = useState(null);

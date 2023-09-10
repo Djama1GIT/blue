@@ -38,7 +38,7 @@ services:
     depends_on:
       - db
     volumes:
-      - server_data:/app/data
+      - server_data:/app/app/media
 
   chat:
     build: ./chat_service

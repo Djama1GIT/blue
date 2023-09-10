@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import RecoveryPassword from './components/RecoveryPassword'
 import Stream from './components/Stream'
+import Streamer from './components/Streamer'
 import Main from './components/Main'
 import PageNotFound from './components/PageNotFound'
 
@@ -24,6 +25,7 @@ const routes = [
   { path: '/register/', component: Register },
   { path: '/recovery-password/', component: RecoveryPassword },
   { path: '/stream/:id', component: Stream },
+  { path: '/streamer/:id', component: Streamer },
   { path: '/', component: Main },
   { path: '*', component: PageNotFound },
 ];

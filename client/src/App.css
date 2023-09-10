@@ -512,6 +512,39 @@ th .name {
     height: 100%;
     width: 82em;
 }
+.streamer-container {
+    display: flex;
+    position: absolute;
+    text-align: left;
+    margin-top: 4.6em;
+    margin-left: 1em;
+    width: 100%;
+}
+.streamer-content {
+    display: ruby;
+    height: 100%;
+    width: 100%;
+    margin-top: 12em;
+}
+.streamer-content .stream-content {
+    margin-left: 10em;
+    margin-top: 5em;
+    width: auto;
+}
+.streamer-content .stream-content .stream .streamImage {
+    height: 18em;
+    width: 32em;
+}
+.streamer-content .avatar-content {
+    margin-right: 15em;
+    float: right;
+    justify-content: right;
+    align-items: right;
+}
+.streamer-content .avatar-content .avatar {
+    height: 30em;
+    width: 30em;
+}
 .stream-data {
     margin-left: 0.6em;
 }
@@ -533,7 +566,12 @@ th .name {
     margin-top: 0;
     position: absolute;
 }
-
+.inactive {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+}
 .author:hover {
     cursor: pointer;
 }
@@ -698,6 +736,24 @@ th .name {
   }
   .chat .input button {
     width: 14%;
+  }
+}
+@media (max-width: 1220px) {
+ /* TODO */
+  .streamer-content {
+    display: grid!important;
+    height: 100%;
+    width: 100%;
+    margin-top: 1em;
+  }
+  .streamer-content .avatar-content {
+    display: grid!important;
+    justify-content: center;
+    margin-top: 10em;
+  }
+  .streamer-content .avatar-content .avatar {
+    height: 20em;
+    width: 20em;
   }
 }
 .subscribe {

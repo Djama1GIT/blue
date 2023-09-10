@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { HOST, AVATARS_URL } from '../Consts'
 
@@ -29,6 +29,17 @@ function Stream({ session, setSession, user, setUser, fetchUser }) {
     return <div className="stream-container">Loading...</div>;
   }
   document.title = streamData.name;
+
+  if (!streamData.is_active) {
+    return (
+      <div className="stream-container">
+        <div className="stream-content inactive">
+          <h1>This stream is inactive</h1>
+          <Link to="/">Go to main page</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="stream-container">
